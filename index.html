@@ -37,6 +37,22 @@
   <nav class="nav" id="nav" aria-label="Primary navigation">
     <div class="nav__inner container">
       <a href="#" class="nav__logo" aria-label="Maya Erusalimsky — back to top">
+        <svg class="nav__logo-mark" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="logo-grad-nav" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#00d4ff"/>
+              <stop offset="100%" stop-color="#7c3aed"/>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="8" width="104" height="104" rx="26"
+                fill="#0f1420" stroke="url(#logo-grad-nav)" stroke-width="5"/>
+          <path d="M30 80 V44 L52 68 L74 44 V62"
+                fill="none" stroke="url(#logo-grad-nav)" stroke-width="10"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M62 70 L74 82 L96 46"
+                fill="none" stroke="#00d4ff" stroke-width="10"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
         Maya Erusalimsky
       </a>
 
@@ -115,11 +131,24 @@
           </div>
         </div>
 
-        <!-- Monogram avatar — swap for a photo by replacing the span with an <img> -->
-        <div class="hero__avatar" aria-hidden="true">
-          <div class="hero__avatar-ring">
-            <span class="hero__avatar-initials">ME</span>
-          </div>
+        <!-- Brand mark — an M resolving into a QA checkmark -->
+        <div class="hero__logo" aria-hidden="true">
+          <svg class="hero__logo-mark" viewBox="0 0 120 120" focusable="false">
+            <defs>
+              <linearGradient id="logo-grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#00d4ff"/>
+                <stop offset="100%" stop-color="#7c3aed"/>
+              </linearGradient>
+            </defs>
+            <rect x="8" y="8" width="104" height="104" rx="26"
+                  fill="#0f1420" stroke="url(#logo-grad)" stroke-width="3.5"/>
+            <path d="M30 80 V44 L52 68 L74 44 V62"
+                  fill="none" stroke="url(#logo-grad)" stroke-width="9"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M62 70 L74 82 L96 46"
+                  fill="none" stroke="#00d4ff" stroke-width="9"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
       </div>
 
@@ -606,7 +635,9 @@
         </p>
 
         <div class="contact__cta-wrap reveal">
-          <a href="mailto:mayageva11@gmail.com" class="btn btn--primary contact__cta">
+          <a href="mailto:mayageva11@gmail.com?subject=Reaching%20out%20from%20your%20portfolio&body=Hi%20Maya%2C%0A%0A"
+             class="btn btn--primary contact__cta"
+             aria-label="Email Maya — opens your mail app with a draft to mayageva11@gmail.com">
             <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
               <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
             </svg>

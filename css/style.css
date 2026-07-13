@@ -264,6 +264,9 @@ h1, h2, h3, h4 {
 }
 
 .nav__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   font-family: var(--font-head);
   font-size: 1rem;
   font-weight: 700;
@@ -272,6 +275,12 @@ h1, h2, h3, h4 {
   transition: color var(--ease);
 }
 .nav__logo:hover { color: var(--accent); }
+
+.nav__logo-mark {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
 
 .nav__links {
   display: flex;
@@ -422,47 +431,23 @@ h1, h2, h3, h4 {
 .hero__content > *:nth-child(5) { animation-delay: 0.41s; }
 .hero__content > *:nth-child(6) { animation-delay: 0.50s; }
 
-/* Monogram avatar — hidden below desktop widths */
-.hero__avatar {
+/* Brand mark — hidden below desktop widths */
+.hero__logo {
   flex-shrink: 0;
   display: none;
   animation: fade-up 0.8s cubic-bezier(0.2, 0.7, 0.3, 1) 0.45s both;
 }
 
 @media (min-width: 1024px) {
-  .hero__avatar { display: block; }
+  .hero__logo { display: block; }
 }
 
-.hero__avatar-ring {
-  width: 240px;
-  height: 240px;
-  border-radius: 50%;
-  padding: 4px;   /* gradient ring thickness */
-  background: conic-gradient(from 210deg, var(--accent), var(--violet), var(--accent));
-  box-shadow:
-    0 0 60px rgba(0, 212, 255, 0.14),
-    0 0 120px rgba(124, 58, 237, 0.12);
-}
-
-.hero__avatar-initials {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 30% 25%, #1a2138 0%, var(--surface) 65%);
-  font-family: var(--font-head);
-  font-size: 4.25rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  background-clip: padding-box;
-  color: transparent;
-  background-image:
-    linear-gradient(130deg, var(--accent) 20%, #a78bfa 80%),
-    radial-gradient(circle at 30% 25%, #1a2138 0%, var(--surface) 65%);
-  -webkit-background-clip: text, padding-box;
-  background-clip: text, padding-box;
+.hero__logo-mark {
+  width: 230px;
+  height: 230px;
+  filter:
+    drop-shadow(0 0 32px rgba(0, 212, 255, 0.16))
+    drop-shadow(0 0 80px rgba(124, 58, 237, 0.14));
 }
 
 /* Scroll-down indicator */
@@ -1436,6 +1421,13 @@ h1, h2, h3, h4 {
   .nav__hamburger { display: none !important; }
 }
 
+/* ── Large desktop — roomier rhythm, bigger titles ─────────── */
+@media (min-width: 1024px) {
+  .section { padding: 6.5rem 0; }
+  .section__title { font-size: 2.25rem; }
+  .flagship__problem { padding: 2rem 2.5rem; }
+}
+
 /* ════════════════════════════════════════════════════════════════
    REDUCED MOTION — wrap every animation & transition
 ════════════════════════════════════════════════════════════════ */
@@ -1448,7 +1440,7 @@ h1, h2, h3, h4 {
   }
 
   .hero__content > *,
-  .hero__avatar,
+  .hero__logo,
   .hero__scroll,
   .hero__scroll-chevron {
     animation: none;
