@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maya Erusalimsky — Automation Engineer</title>
+  <meta name="description" content="Maya Erusalimsky — QA Automation Engineer. 500+ automated tests in CI/CD, Playwright + TypeScript, creator of FlakeHound: npm-published flaky-test root-cause analysis, live on the GitHub Marketplace.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Maya Erusalimsky — QA Automation Engineer">
+  <meta property="og:description" content="Creator of FlakeHound (npm + GitHub Marketplace). 500+ automated tests in CI/CD. Playwright, TypeScript, and AI-integrated test automation.">
+  <meta property="og:image" content="https://mayageva11.github.io/assets/og-image.png">
+  <meta property="og:url" content="https://mayageva11.github.io">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Maya Erusalimsky — QA Automation Engineer">
+  <meta name="twitter:description" content="Creator of FlakeHound (npm + GitHub Marketplace). 500+ automated tests in CI/CD. Playwright, TypeScript, and AI-integrated test automation.">
+  <meta name="twitter:image" content="https://mayageva11.github.io/assets/og-image.png">
+
+  <!-- NOTE: assets/og-image.png is not yet generated. Add a 1200×630 social card image. -->
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Fonts: single request, display=swap prevents FOIT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Skip navigation for keyboard/screen-reader users -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ─── NAV ────────────────────────────────────────────────────── -->
+  <nav class="nav" id="nav" aria-label="Primary navigation">
+    <div class="nav__inner container">
+      <a href="#" class="nav__logo" aria-label="Maya Erusalimsky — back to top">
+        Maya Erusalimsky
+      </a>
+
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="#about"    class="nav__link">About</a></li>
+        <li><a href="#projects" class="nav__link">Projects</a></li>
+        <li><a href="#contact"  class="nav__link">Contact</a></li>
+        <li>
+          <a href="https://www.linkedin.com/in/maya-eru/"
+             class="btn btn--outline btn--sm"
+             target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+        </li>
+      </ul>
+
+      <button
+        class="nav__hamburger"
+        id="hamburger"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="nav-links">
+        <span class="nav__bar" aria-hidden="true"></span>
+        <span class="nav__bar" aria-hidden="true"></span>
+        <span class="nav__bar" aria-hidden="true"></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <!-- ─── HERO ───────────────────────────────────────────────────── -->
+    <header class="hero" id="hero" aria-labelledby="hero-name">
+      <!-- Animated gradient mesh — decorative only -->
+      <div class="hero__mesh" aria-hidden="true"></div>
+
+      <div class="hero__inner container">
+        <!-- Featured pill — scrolls to FlakeHound section -->
+        <a href="#flakehound" class="hero__featured-pill">
+          ⭐ Featured: FlakeHound →
+        </a>
+
+        <h1 class="hero__name" id="hero-name">Maya Erusalimsky</h1>
+        <p class="hero__role">Automation Engineer</p>
+        <p class="hero__tagline">
+          I build tools that hunt flaky tests, orchestrate QA at scale,
+          and integrate AI — so teams ship with confidence.
+        </p>
+
+        <ul class="hero__chips" aria-label="Highlights" role="list">
+          <li class="chip">npm published</li>
+          <li class="chip">GitHub Marketplace</li>
+          <li class="chip">AI-powered</li>
+          <li class="chip">5 projects</li>
+        </ul>
+
+        <div class="hero__actions">
+          <a href="#projects" class="btn btn--primary">View Projects</a>
+          <a href="https://github.com/mayageva11"
+             class="btn btn--ghost"
+             target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/maya-eru/"
+             class="btn btn--ghost"
+             target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+          <a href="assets/maya-erusalimsky-cv.pdf"
+             class="btn btn--ghost"
+             download
+             aria-label="Download CV (PDF)">
+            Download CV
+          </a>
+        </div>
+      </div>
+
+      <a href="#about" class="hero__scroll" aria-label="Scroll down to About section">
+        <span class="hero__scroll-chevron" aria-hidden="true"></span>
+      </a>
+    </header>
+
+    <!-- ─── ABOUT ──────────────────────────────────────────────────── -->
+    <section class="section about" id="about" aria-labelledby="about-heading">
+      <div class="container">
+        <p class="section__eyebrow">Who I am</p>
+        <h2 class="section__title" id="about-heading">About</h2>
+
+        <div class="about__inner reveal">
+          <div class="about__bio">
+            <p>
+              QA Automation Engineer with hands-on experience in Playwright,
+              TypeScript, API, and E2E testing within Agile environments.
+            </p>
+            <p>
+              I've built and maintained large-scale automation frameworks with
+              <strong>500+ automated tests</strong> integrated into CI/CD pipelines —
+              enabling continuous validation of complex systems and faster, more
+              reliable release cycles. My day-to-day spans designing test strategies,
+              investigating production issues, and collaborating closely with
+              developers and product teams to improve system stability and
+              software quality.
+            </p>
+            <p>
+              Alongside professional experience, I build advanced engineering
+              projects — including <a href="#flakehound" class="text-link">FlakeHound</a>,
+              a flaky-test root-cause analyser published on npm and the GitHub
+              Marketplace, and a QA automation platform powered by the Claude API —
+              combining AI-assisted workflows with modern test automation architecture.
+            </p>
+            <p>
+              B.Sc. in Computer Science with a strong focus on scalable systems,
+              automation design, and software quality engineering.
+            </p>
+          </div>
+
+          <dl class="about__stats" aria-label="Career highlights">
+            <div class="about__stat">
+              <dt>Automated tests in CI/CD</dt>
+              <dd>500+</dd>
+            </div>
+            <div class="about__stat">
+              <dt>Degree</dt>
+              <dd>B.Sc. Computer Science</dd>
+            </div>
+            <div class="about__stat">
+              <dt>Open-source flagship</dt>
+              <dd>npm&nbsp;+&nbsp;Marketplace</dd>
+            </div>
+            <div class="about__stat">
+              <dt>AI integration</dt>
+              <dd>Claude&nbsp;API&nbsp;·&nbsp;Ollama</dd>
+            </div>
+          </dl>
+
+          <ul class="skill-cloud" aria-label="Skills" role="list">
+            <li class="skill-tag">TypeScript</li>
+            <li class="skill-tag">Playwright</li>
+            <li class="skill-tag">Node.js</li>
+            <li class="skill-tag">React</li>
+            <li class="skill-tag">Next.js</li>
+            <li class="skill-tag">Claude AI</li>
+            <li class="skill-tag">Ollama</li>
+            <li class="skill-tag">GitHub Actions</li>
+            <li class="skill-tag">MongoDB</li>
+            <li class="skill-tag">Python</li>
+            <li class="skill-tag">Express</li>
+            <li class="skill-tag">Vitest</li>
+            <li class="skill-tag">Jest</li>
+            <li class="skill-tag">Allure</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── FLAKEHOUND — FLAGSHIP ──────────────────────────────────── -->
+    <section class="section flagship" id="flakehound" aria-labelledby="fh-heading">
+      <div class="container">
+
+        <!-- ── Header block ──────────────────────────────────────── -->
+        <div class="flagship__header reveal">
+          <p class="section__eyebrow section__eyebrow--violet">⭐ Flagship project</p>
+          <div class="flagship__title-row">
+            <h2 class="flagship__title" id="fh-heading">🐕 FlakeHound</h2>
+            <div class="flagship__achievement-chips" aria-label="Achievements">
+              <span class="chip chip--violet">GitHub Marketplace</span>
+              <span class="chip chip--violet">npm published</span>
+              <span class="chip chip--violet">MIT licensed</span>
+            </div>
+          </div>
+
+          <!--
+            BADGES — real shields.io SVGs.
+            Replace NPM_VERSION with the actual version number from package.json.
+            Replace TESTS_COUNT with the passing test count from CI (e.g. 221).
+          -->
+          <div class="flagship__badges" aria-label="Build badges">
+            <img
+              src="https://img.shields.io/npm/v/flakehound?logo=npm&color=CB3837"
+              alt="npm version badge">
+            <img
+              src="https://github.com/mayageva11/flakehound/actions/workflows/ci.yml/badge.svg"
+              alt="CI status badge">
+            <img
+              src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white"
+              alt="TypeScript strict mode badge">
+            <img
+              src="https://img.shields.io/badge/tests-TESTS__COUNT%20passing-brightgreen"
+              alt="Tests passing — replace TESTS_COUNT with actual number">
+          </div>
+
+          <div class="flagship__ctas">
+            <a href="https://mayageva11.github.io/flakehound/"
+               class="btn btn--primary"
+               target="_blank" rel="noopener noreferrer">
+              Live Dashboard →
+            </a>
+            <a href="https://github.com/mayageva11/flakehound"
+               class="btn btn--outline"
+               target="_blank" rel="noopener noreferrer">
+              CLI Repository
+            </a>
+            <a href="https://www.npmjs.com/package/flakehound"
+               class="btn btn--outline"
+               target="_blank" rel="noopener noreferrer">
+              npm Package
+            </a>
+            <a href="https://github.com/mayageva11/flakehound-demo"
+               class="btn btn--ghost"
+               target="_blank" rel="noopener noreferrer">
+              Demo Repo
+            </a>
+          </div>
+        </div>
+
+        <!-- ── Problem block ─────────────────────────────────────── -->
+        <div class="flagship__problem reveal">
+          <h3 class="flagship__block-title">The problem it solves</h3>
+          <p class="flagship__problem-text">
+            A flaky test passes and fails on the same code — and every red build it
+            causes trains your team to click "re-run" instead of investigating. Existing
+            tools count pass/fail rates and tell you <em>that</em> a test is flaky;
+            paid services like BuildPulse and Trunk.io charge for exactly that.
+          </p>
+          <p class="flagship__problem-text">
+            FlakeHound is <strong>free, open-source, and goes further</strong>: it
+            normalises stack traces and clusters failures by their underlying cause —
+            turning <em>"23 failures over 3 weeks"</em> into <em>"4 unique bugs"</em>.
+            It knows that a test failing 100% of the time since one commit isn't flaky,
+            it's <strong>broken</strong> — and it gates CI on <em>new</em> regressions
+            only, so the build fails once when a bug lands, not on every run until
+            someone fixes it.
+          </p>
+        </div>
+
+        <!-- ── Terminal demo — real `flakehound analyze` output ──── -->
+        <div class="flagship__terminal reveal">
+          <h3 class="flagship__block-title">See it run</h3>
+          <div class="terminal" role="img" aria-label="Terminal showing flakehound analyze output: one regression detected, one flaky test flagged for quarantine, five failures clustered into two unique bugs, CI gate failing on the new regression">
+            <div class="terminal__bar">
+              <span class="terminal__dot terminal__dot--red" aria-hidden="true"></span>
+              <span class="terminal__dot terminal__dot--yellow" aria-hidden="true"></span>
+              <span class="terminal__dot terminal__dot--green" aria-hidden="true"></span>
+              <span class="terminal__title" aria-hidden="true">zsh — flakehound</span>
+              <button class="terminal__replay" id="terminal-replay" type="button"
+                      aria-label="Replay the terminal animation" hidden>
+                ↻ Replay
+              </button>
+            </div>
+            <pre class="terminal__body" id="terminal-output" aria-hidden="true"><code></code></pre>
+          </div>
+        </div>
+
+        <!-- ── How it works — 4 feature cards ───────────────────── -->
+        <div class="flagship__features reveal">
+          <h3 class="flagship__block-title">How it works</h3>
+          <div class="feature-grid">
+
+            <div class="feature-card">
+              <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">🔍</span></div>
+              <h4 class="feature-card__title">Root-cause clustering</h4>
+              <p class="feature-card__desc">
+                Jaccard similarity + greedy clustering groups structurally identical
+                failures. "23 failures = 4 bugs" — one cluster, one bug, even when
+                it spans many tests and weeks of history.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">🤖</span></div>
+              <h4 class="feature-card__title">AI hypothesis layer</h4>
+              <p class="feature-card__desc">
+                Claude API or local Ollama (privacy-first, zero cost) annotates each
+                cluster with a one-line root-cause hypothesis. Swappable provider
+                interface — the deterministic core works identically without it.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">🚧</span></div>
+              <h4 class="feature-card__title">Quarantine subcommand</h4>
+              <p class="feature-card__desc">
+                Auto-isolates high-confidence flaky tests via surgical AST edits
+                (ts-morph). Files one GitHub issue per test. Auto-releases after
+                N consecutive clean runs — no manual cleanup needed.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">📊</span></div>
+              <h4 class="feature-card__title">Self-contained dashboard</h4>
+              <p class="feature-card__desc">
+                One HTML file with the full report embedded — open from disk,
+                attach as a CI artifact, or publish directly to GitHub Pages.
+                No server, no account, no dependencies.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── Tech stack ────────────────────────────────────────── -->
+        <div class="flagship__tech reveal">
+          <ul class="skill-cloud" aria-label="FlakeHound tech stack" role="list">
+            <li class="skill-tag">TypeScript</li>
+            <li class="skill-tag">Node.js</li>
+            <li class="skill-tag">GitHub Actions</li>
+            <li class="skill-tag">Claude API</li>
+            <li class="skill-tag">Ollama</li>
+            <li class="skill-tag">Vitest</li>
+            <li class="skill-tag">ts-morph</li>
+            <li class="skill-tag">JUnit XML</li>
+          </ul>
+        </div>
+
+        <!-- ── Dashboard screenshot ──────────────────────────────── -->
+        <div class="flagship__demo reveal">
+          <h3 class="flagship__block-title">The triage dashboard</h3>
+          <a href="https://mayageva11.github.io/flakehound/"
+             target="_blank" rel="noopener noreferrer"
+             class="flagship__demo-link"
+             aria-label="Open the live FlakeHound dashboard">
+            <img
+              src="assets/flakehound-dashboard.png"
+              alt="FlakeHound dashboard: failure clusters ranked by impact with NEW chips on unseen bug shapes, test signals grouped by verdict, and the quarantine panel showing progress toward auto-release"
+              class="flagship__demo-img"
+              width="2880" height="2240"
+              loading="lazy">
+            <span class="flagship__demo-caption">
+              One self-contained HTML file — click to open the live dashboard ↗
+            </span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── OTHER PROJECTS ─────────────────────────────────────────── -->
+    <section class="section projects" id="projects" aria-labelledby="projects-heading">
+      <div class="container">
+        <p class="section__eyebrow">More of my work</p>
+        <h2 class="section__title" id="projects-heading">Other Projects</h2>
+
+        <div class="projects__grid">
+
+          <article class="project-card reveal">
+            <div class="project-card__body">
+              <h3 class="project-card__title">NexusQA</h3>
+              <p class="project-card__tagline">
+                End-to-end platform automation: a realistic SaaS analytics app plus a
+                production-grade Playwright suite — 234 tests across UI and API layers,
+                3 browsers, CI on every push and nightly runs.
+              </p>
+              <ul class="skill-cloud skill-cloud--sm" aria-label="Tech stack" role="list">
+                <li class="skill-tag">Playwright</li>
+                <li class="skill-tag">TypeScript</li>
+                <li class="skill-tag">Claude API</li>
+                <li class="skill-tag">Allure</li>
+                <li class="skill-tag">GitHub Actions</li>
+              </ul>
+            </div>
+            <a href="https://github.com/mayageva11/nexusqa"
+               class="btn btn--ghost project-card__link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="View NexusQA on GitHub">
+              View on GitHub →
+            </a>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-card__body">
+              <h3 class="project-card__title">QuestForge</h3>
+              <p class="project-card__tagline">
+                Makes studying for system design interviews actually fun — 16 real
+                interview challenges turned into animated, story-driven quests with
+                AI-generated scenes. Zero npm dependencies.
+              </p>
+              <ul class="skill-cloud skill-cloud--sm" aria-label="Tech stack" role="list">
+                <li class="skill-tag">Vanilla JS</li>
+                <li class="skill-tag">Groq API</li>
+                <li class="skill-tag">Llama 3.1</li>
+                <li class="skill-tag">GitHub Pages</li>
+              </ul>
+            </div>
+            <a href="https://github.com/mayageva11/questforge"
+               class="btn btn--ghost project-card__link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="View QuestForge on GitHub">
+              View on GitHub →
+            </a>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-card__body">
+              <h3 class="project-card__title">EduCare</h3>
+              <p class="project-card__tagline">
+                Full-stack management platform for school counselors — student case
+                tracking with a 6-tier severity system, official Ministry of Education
+                form generation, and full Hebrew RTL support.
+              </p>
+              <ul class="skill-cloud skill-cloud--sm" aria-label="Tech stack" role="list">
+                <li class="skill-tag">Next.js 15</li>
+                <li class="skill-tag">React 19</li>
+                <li class="skill-tag">TypeScript</li>
+                <li class="skill-tag">MongoDB</li>
+                <li class="skill-tag">Puppeteer</li>
+                <li class="skill-tag">JWT</li>
+              </ul>
+            </div>
+            <a href="https://github.com/mayageva11/EduCare"
+               class="btn btn--ghost project-card__link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="View EduCare on GitHub">
+              View on GitHub →
+            </a>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-card__body">
+              <h3 class="project-card__title">Job Dashboard</h3>
+              <p class="project-card__tagline">
+                Automated job aggregation that works while you sleep — scrapes QA
+                openings daily, scores each one against your skills with a weighted
+                70% match threshold, and emails a filtered digest every morning.
+              </p>
+              <ul class="skill-cloud skill-cloud--sm" aria-label="Tech stack" role="list">
+                <li class="skill-tag">React</li>
+                <li class="skill-tag">Node.js</li>
+                <li class="skill-tag">Adzuna API</li>
+                <li class="skill-tag">Gmail SMTP</li>
+              </ul>
+            </div>
+            <a href="https://github.com/mayageva11/job-dashboard"
+               class="btn btn--ghost project-card__link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="View Job Dashboard on GitHub">
+              View on GitHub →
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── CONTACT ────────────────────────────────────────────────── -->
+    <section class="section contact" id="contact" aria-labelledby="contact-heading">
+      <div class="container">
+        <p class="section__eyebrow">Get in touch</p>
+        <h2 class="section__title" id="contact-heading">Let's connect</h2>
+        <p class="contact__sub reveal">
+          Open to QA automation roles, open-source collaboration, and good
+          conversations about testing.
+        </p>
+
+        <div class="contact__cta-wrap reveal">
+          <a href="mailto:mayageva11@gmail.com" class="btn btn--primary contact__cta">
+            <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
+              <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
+            </svg>
+            mayageva11@gmail.com
+          </a>
+        </div>
+
+        <ul class="contact__links reveal" role="list">
+
+          <li>
+            <a href="https://www.linkedin.com/in/maya-eru/"
+               class="contact__link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="LinkedIn profile — maya-eru">
+              <!-- LinkedIn SVG -->
+              <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              LinkedIn
+            </a>
+          </li>
+
+          <li>
+            <a href="https://github.com/mayageva11"
+               class="contact__link"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="GitHub profile — mayageva11">
+              <!-- GitHub SVG -->
+              <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
+                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+              </svg>
+              GitHub
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── FOOTER ─────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer__text">
+        Maya Erusalimsky — Automation Engineer &middot; Built with HTML, CSS &amp; JS &middot; 2026
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
