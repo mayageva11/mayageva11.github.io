@@ -56,38 +56,44 @@ if (!prefersReducedMotion) {
 }
 
 /* ─── FlakeHound terminal demo ─────────────────────────────────
-   A realistic CLI run in three acts:
-   1. the command is typed character by character
-   2. a braille spinner "analyzes" the run history
-   3. the report prints line by line, pausing between verdict groups
+   Tells the real pipeline story, step by step:
+   1. context — CI just finished a test run, JUnit XML is on disk
+   2. the flakehound command is typed character by character
+   3. spinner: reading the JUnit XML history
+   4. confirmed ingest summary
+   5. spinner: scoring / isolating / clustering
+   6. the report prints line by line, pausing between verdict groups
    Reduced motion → the finished output renders instantly.        */
 
-const TERM_COMMAND = 'npx flakehound analyze';
-
 const TERM_SPINNER_FRAMES = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
-const TERM_SPINNER_TEXT = ' analyzing 12 runs across 4 files…';
 
-/* pause: extra delay (ms) before the line prints — breathing room between groups */
-const TERM_REPORT = [
-  { text: 'flakehound — 12 test runs across 4 files, 3 tests analyzed', cls: 't-dim' },
-  { text: '' },
-  { text: 'Regressions (1)', cls: 't-red', pause: 260 },
-  { text: '  ✗ shop.spec.ts > payment — broken since bbb2222', cls: 't-red' },
-  { text: '      failing in 100% of the last 3 run(s) since commit bbb2222; passed before it', cls: 't-dim' },
-  { text: '' },
-  { text: 'Flaky tests — quarantine candidates (1)', cls: 't-yellow', pause: 260 },
-  { text: '  ~ shop.spec.ts > checkout — score 1.00 (medium confidence)', cls: 't-yellow' },
-  { text: '      1 pass↔fail transition(s) on the same commit', cls: 't-dim' },
-  { text: '' },
-  { text: 'Failure clusters (2) — ranked by impact', cls: 't-cyan', pause: 260 },
-  { text: '  1. [7a7c11808d52] 3 occurrence(s) across 1 test(s)' },
-  { text: '      AssertionError: expected cart total to equal charged amount', cls: 't-dim' },
-  { text: '  2. [a8a64e2d45ec] 2 occurrence(s) across 1 test(s)' },
-  { text: '      TimeoutError: Timeout exceeded waiting for locator(\'#pay-button\')', cls: 't-dim' },
-  { text: '' },
-  { text: 'CI gate: 1 new, 0 known, 0 resolved regression(s)', cls: 't-red', pause: 380 },
-  { text: '' },
-  { text: '$ echo $?  →  1   # build fails once, when the bug lands', cls: 't-green', pause: 300 }
+/* Step types:
+   comment — dim line printed instantly (context, not typed)
+   cmd     — typed character by character after a "$ " prompt
+   spin    — transient spinner line; disappears when the step ends
+   line    — printed line (pause = extra ms before it appears)     */
+const TERM_SCRIPT = [
+  { type: 'comment', text: '# CI test run just finished — the runner saved its results as JUnit XML' },
+  { type: 'cmd',     text: 'npx flakehound analyze --input "test-results/**/*.xml"' },
+  { type: 'spin',    text: ' reading JUnit XML run history…', frames: 14 },
+  { type: 'line',    text: '✓ ingested 4 XML files — a history of 12 runs of the test suite', cls: 't-green' },
+  { type: 'line',    text: '' },
+  { type: 'spin',    text: ' scoring flakiness · isolating regressions · clustering failures by root cause…', frames: 18 },
+  { type: 'line',    text: 'Regressions (1) — broken code, not flaky', cls: 't-red' },
+  { type: 'line',    text: '  ✗ shop.spec.ts > payment — failing in 100% of runs since commit bbb2222', cls: 't-red' },
+  { type: 'line',    text: '      passed before that commit → this is a hard regression, someone broke it', cls: 't-dim' },
+  { type: 'line',    text: '' },
+  { type: 'line',    text: 'Flaky tests (1) — quarantine candidates', cls: 't-yellow', pause: 300 },
+  { type: 'line',    text: '  ~ shop.spec.ts > checkout — passed AND failed on the same commit', cls: 't-yellow' },
+  { type: 'line',    text: '      same code, different result → genuinely flaky, not a regression', cls: 't-dim' },
+  { type: 'line',    text: '' },
+  { type: 'line',    text: 'Failure clusters — 5 failures share just 2 root causes', cls: 't-cyan', pause: 300 },
+  { type: 'line',    text: '  1. [7a7c1180] ×3  AssertionError: cart total ≠ charged amount' },
+  { type: 'line',    text: '  2. [a8a64e2d] ×2  TimeoutError: waiting for locator(\'#pay-button\')' },
+  { type: 'line',    text: '      → fix 2 bugs, not 5 failures', cls: 't-dim' },
+  { type: 'line',    text: '' },
+  { type: 'line',    text: 'CI gate: 1 NEW regression → exit 1 (build fails once, when the bug lands)', cls: 't-red', pause: 380 },
+  { type: 'line',    text: '         known regressions & flaky tests never re-fail the build', cls: 't-dim' }
 ];
 
 const CARET = '<span class="t-caret"></span>';
@@ -96,14 +102,18 @@ function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function termLineHtml({ text, cls }) {
-  const safe = escapeHtml(text);
-  return cls ? `<span class="${cls}">${safe}</span>` : safe;
+function termStepHtml(step) {
+  const safe = escapeHtml(step.text);
+  if (step.type === 'comment') return `<span class="t-dim">${safe}</span>`;
+  if (step.type === 'cmd')     return `<span class="t-green">$</span> <span class="t-cyan">${safe}</span>`;
+  return step.cls ? `<span class="${step.cls}">${safe}</span>` : safe;
 }
 
 function renderTerminalInstant(code) {
-  const cmd = `<span class="t-green">$</span> <span class="t-cyan">${escapeHtml(TERM_COMMAND)}</span>\n`;
-  code.innerHTML = cmd + TERM_REPORT.map(termLineHtml).join('\n');
+  code.innerHTML = TERM_SCRIPT
+    .filter(s => s.type !== 'spin')
+    .map(termStepHtml)
+    .join('\n');
 }
 
 function runTerminal(code, onDone) {
@@ -113,47 +123,60 @@ function runTerminal(code, onDone) {
   const timers = [];
   const later = (fn, ms) => timers.push(setTimeout(fn, ms));
 
-  /* Act 1 — type the command with human-ish jitter */
-  function typeCommand(i) {
+  function step(i) {
     if (cancelled) return;
-    const typed = escapeHtml(TERM_COMMAND.slice(0, i));
-    code.innerHTML = `<span class="t-green">$</span> <span class="t-cyan">${typed}</span>${CARET}`;
-    if (i < TERM_COMMAND.length) {
-      later(() => typeCommand(i + 1), 26 + Math.random() * 44);
-    } else {
-      doneHtml = `<span class="t-green">$</span> <span class="t-cyan">${escapeHtml(TERM_COMMAND)}</span>\n`;
-      later(spin.bind(null, 0), 320);
-    }
-  }
-
-  /* Act 2 — spinner while "analyzing" */
-  function spin(frame) {
-    if (cancelled) return;
-    const f = TERM_SPINNER_FRAMES[frame % TERM_SPINNER_FRAMES.length];
-    code.innerHTML = doneHtml +
-      `<span class="t-cyan">${f}</span><span class="t-dim">${escapeHtml(TERM_SPINNER_TEXT)}</span>`;
-    if (frame < 16) {
-      later(() => spin(frame + 1), 75);
-    } else {
-      later(() => printReport(0), 120);
-    }
-  }
-
-  /* Act 3 — the report prints line by line */
-  function printReport(i) {
-    if (cancelled) return;
-    if (i >= TERM_REPORT.length) {
+    if (i >= TERM_SCRIPT.length) {
       code.innerHTML = doneHtml;   /* drop the caret */
       onDone();
       return;
     }
-    const line = TERM_REPORT[i];
-    doneHtml += termLineHtml(line) + '\n';
-    code.innerHTML = doneHtml + CARET;
-    later(() => printReport(i + 1), (line.pause || 0) + (line.text === '' ? 40 : 85));
+    const s = TERM_SCRIPT[i];
+
+    if (s.type === 'comment') {
+      doneHtml += termStepHtml(s) + '\n';
+      code.innerHTML = doneHtml + CARET;
+      later(() => step(i + 1), 500);
+
+    } else if (s.type === 'cmd') {
+      typeCmd(0);
+      function typeCmd(c) {
+        if (cancelled) return;
+        const typed = escapeHtml(s.text.slice(0, c));
+        code.innerHTML = doneHtml +
+          `<span class="t-green">$</span> <span class="t-cyan">${typed}</span>${CARET}`;
+        if (c < s.text.length) {
+          later(() => typeCmd(c + 1), 22 + Math.random() * 40);
+        } else {
+          doneHtml += termStepHtml(s) + '\n';
+          later(() => step(i + 1), 340);
+        }
+      }
+
+    } else if (s.type === 'spin') {
+      spin(0);
+      function spin(frame) {
+        if (cancelled) return;
+        const f = TERM_SPINNER_FRAMES[frame % TERM_SPINNER_FRAMES.length];
+        code.innerHTML = doneHtml +
+          `<span class="t-cyan">${f}</span><span class="t-dim">${escapeHtml(s.text)}</span>`;
+        if (frame < s.frames) {
+          later(() => spin(frame + 1), 75);
+        } else {
+          later(() => step(i + 1), 100);   /* spinner line vanishes */
+        }
+      }
+
+    } else {  /* line */
+      later(() => {
+        if (cancelled) return;
+        doneHtml += termStepHtml(s) + '\n';
+        code.innerHTML = doneHtml + CARET;
+        step(i + 1);
+      }, (s.pause || 0) + (s.text === '' ? 40 : 95));
+    }
   }
 
-  typeCommand(0);
+  step(0);
 
   return () => { cancelled = true; timers.forEach(clearTimeout); };
 }

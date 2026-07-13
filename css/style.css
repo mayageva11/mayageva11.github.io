@@ -858,7 +858,7 @@ h1, h2, h3, h4 {
   line-height: 1.7;
   color: var(--text);
   overflow-x: auto;
-  min-height: 380px;
+  min-height: 470px;
   margin: 0;
   white-space: pre;
   tab-size: 2;
@@ -1386,7 +1386,7 @@ h1, h2, h3, h4 {
   .terminal__body {
     font-size: 0.68rem;
     padding: 1rem;
-    min-height: 320px;
+    min-height: 400px;
   }
 
   /* About stats — two columns on phones */

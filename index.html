@@ -374,7 +374,7 @@
         <!-- ── Terminal demo — real `flakehound analyze` output ──── -->
         <div class="flagship__terminal reveal">
           <h3 class="flagship__block-title">See it run</h3>
-          <div class="terminal" role="img" aria-label="Terminal showing flakehound analyze output: one regression detected, one flaky test flagged for quarantine, five failures clustered into two unique bugs, CI gate failing on the new regression">
+          <div class="terminal" role="img" aria-label="Terminal walkthrough: after a CI test run finishes, flakehound reads the JUnit XML run history, then reports one hard regression (failing 100% since one commit), one genuinely flaky test (passed and failed on the same commit), five failures clustered into two root-cause bugs, and a CI gate that fails only on the new regression">
             <div class="terminal__bar">
               <span class="terminal__dot terminal__dot--red" aria-hidden="true"></span>
               <span class="terminal__dot terminal__dot--yellow" aria-hidden="true"></span>
