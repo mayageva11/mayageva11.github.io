@@ -19,8 +19,6 @@
   <meta name="twitter:description" content="Creator of FlakeHound (npm + GitHub Marketplace). 500+ automated tests in CI/CD. Playwright, TypeScript, and AI-integrated test automation.">
   <meta name="twitter:image" content="https://mayageva11.github.io/assets/og-image.png">
 
-  <!-- NOTE: assets/og-image.png is not yet generated. Add a 1200×630 social card image. -->
-
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
   <!-- Fonts: single request, display=swap prevents FOIT -->
@@ -76,43 +74,52 @@
       <div class="hero__mesh" aria-hidden="true"></div>
 
       <div class="hero__inner container">
-        <!-- Featured pill — scrolls to FlakeHound section -->
-        <a href="#flakehound" class="hero__featured-pill">
-          ⭐ Featured: FlakeHound →
-        </a>
-
-        <h1 class="hero__name" id="hero-name">Maya Erusalimsky</h1>
-        <p class="hero__role">Automation Engineer</p>
-        <p class="hero__tagline">
-          I build tools that hunt flaky tests, orchestrate QA at scale,
-          and integrate AI — so teams ship with confidence.
-        </p>
-
-        <ul class="hero__chips" aria-label="Highlights" role="list">
-          <li class="chip">npm published</li>
-          <li class="chip">GitHub Marketplace</li>
-          <li class="chip">AI-powered</li>
-          <li class="chip">5 projects</li>
-        </ul>
-
-        <div class="hero__actions">
-          <a href="#projects" class="btn btn--primary">View Projects</a>
-          <a href="https://github.com/mayageva11"
-             class="btn btn--ghost"
-             target="_blank" rel="noopener noreferrer">
-            GitHub
+        <div class="hero__content">
+          <!-- Featured pill — scrolls to FlakeHound section -->
+          <a href="#flakehound" class="hero__featured-pill">
+            ⭐ Featured: FlakeHound →
           </a>
-          <a href="https://www.linkedin.com/in/maya-eru/"
-             class="btn btn--ghost"
-             target="_blank" rel="noopener noreferrer">
-            LinkedIn
-          </a>
-          <a href="assets/maya-erusalimsky-cv.pdf"
-             class="btn btn--ghost"
-             download
-             aria-label="Download CV (PDF)">
-            Download CV
-          </a>
+
+          <h1 class="hero__name" id="hero-name">Maya Erusalimsky</h1>
+          <p class="hero__role">QA Automation Engineer</p>
+          <p class="hero__tagline">
+            I build tools that hunt flaky tests, orchestrate QA at scale,
+            and integrate AI — so teams ship with confidence.
+          </p>
+
+          <ul class="hero__chips" aria-label="Highlights" role="list">
+            <li class="chip">npm published</li>
+            <li class="chip">GitHub Marketplace</li>
+            <li class="chip">AI-powered</li>
+            <li class="chip">5 projects</li>
+          </ul>
+
+          <div class="hero__actions">
+            <a href="#projects" class="btn btn--primary">View Projects</a>
+            <a href="https://github.com/mayageva11"
+               class="btn btn--ghost"
+               target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/maya-eru/"
+               class="btn btn--ghost"
+               target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+            <a href="assets/maya-erusalimsky-cv.pdf"
+               class="btn btn--ghost"
+               download
+               aria-label="Download CV (PDF)">
+              Download CV
+            </a>
+          </div>
+        </div>
+
+        <!-- Monogram avatar — swap for a photo by replacing the span with an <img> -->
+        <div class="hero__avatar" aria-hidden="true">
+          <div class="hero__avatar-ring">
+            <span class="hero__avatar-initials">ME</span>
+          </div>
         </div>
       </div>
 
@@ -124,7 +131,7 @@
     <!-- ─── ABOUT ──────────────────────────────────────────────────── -->
     <section class="section about" id="about" aria-labelledby="about-heading">
       <div class="container">
-        <p class="section__eyebrow">Who I am</p>
+        <p class="section__eyebrow">01 — Who I am</p>
         <h2 class="section__title" id="about-heading">About</h2>
 
         <div class="about__inner reveal">
@@ -194,13 +201,74 @@
       </div>
     </section>
 
+    <!-- ─── TIMELINE ───────────────────────────────────────────────── -->
+    <section class="section timeline" id="journey" aria-labelledby="journey-heading">
+      <div class="container">
+        <p class="section__eyebrow">02 — Journey</p>
+        <h2 class="section__title" id="journey-heading">Experience &amp; Education</h2>
+
+        <ol class="timeline__list" role="list">
+
+          <li class="timeline__item reveal">
+            <div class="timeline__marker" aria-hidden="true"></div>
+            <div class="timeline__card">
+              <p class="timeline__period">2025 — 2026</p>
+              <h3 class="timeline__title">QA Automation Engineer · Kissterra</h3>
+              <p class="timeline__desc">
+                Designed and developed E2E automation suites with Playwright and
+                TypeScript across web and API layers. Built API test frameworks
+                catching regressions before production, acted as quality gatekeeper
+                at release, and accelerated workflows with AI-assisted tooling —
+                embedded in a cross-functional Agile/Scrum team.
+              </p>
+              <ul class="skill-cloud skill-cloud--sm" aria-label="Technologies" role="list">
+                <li class="skill-tag">Playwright</li>
+                <li class="skill-tag">TypeScript</li>
+                <li class="skill-tag">API Testing</li>
+                <li class="skill-tag">JIRA</li>
+                <li class="skill-tag">Git</li>
+                <li class="skill-tag">AI tooling</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="timeline__item reveal">
+            <div class="timeline__marker" aria-hidden="true"></div>
+            <div class="timeline__card">
+              <p class="timeline__period">2023 — 2025</p>
+              <h3 class="timeline__title">B.Sc. Computer Science · College of Management Academic Studies</h3>
+              <p class="timeline__desc">
+                Specialised in web development — built full-stack applications with
+                JavaScript, TypeScript, HTML, and CSS. Coursework in algorithms,
+                data structures, software engineering, databases, and systems design.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline__item reveal">
+            <div class="timeline__marker" aria-hidden="true"></div>
+            <div class="timeline__card">
+              <p class="timeline__period">Earlier</p>
+              <h3 class="timeline__title">FIRST Robotics Competition — International Competitions, USA</h3>
+              <p class="timeline__desc">
+                Competed in international FRC tournaments in the US with FIRST Israel.
+                Designed, built, and programmed robots through full engineering cycles:
+                requirements, design, build, test, and debug.
+              </p>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+
     <!-- ─── FLAKEHOUND — FLAGSHIP ──────────────────────────────────── -->
     <section class="section flagship" id="flakehound" aria-labelledby="fh-heading">
       <div class="container">
 
         <!-- ── Header block ──────────────────────────────────────── -->
         <div class="flagship__header reveal">
-          <p class="section__eyebrow section__eyebrow--violet">⭐ Flagship project</p>
+          <p class="section__eyebrow section__eyebrow--violet">03 — Flagship project</p>
           <div class="flagship__title-row">
             <h2 class="flagship__title" id="fh-heading">🐕 FlakeHound</h2>
             <div class="flagship__achievement-chips" aria-label="Achievements">
@@ -226,8 +294,8 @@
               src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white"
               alt="TypeScript strict mode badge">
             <img
-              src="https://img.shields.io/badge/tests-TESTS__COUNT%20passing-brightgreen"
-              alt="Tests passing — replace TESTS_COUNT with actual number">
+              src="https://img.shields.io/badge/tests-221%20passing-brightgreen"
+              alt="221 tests passing">
           </div>
 
           <div class="flagship__ctas">
@@ -361,12 +429,20 @@
              target="_blank" rel="noopener noreferrer"
              class="flagship__demo-link"
              aria-label="Open the live FlakeHound dashboard">
-            <img
-              src="assets/flakehound-dashboard.png"
-              alt="FlakeHound dashboard: failure clusters ranked by impact with NEW chips on unseen bug shapes, test signals grouped by verdict, and the quarantine panel showing progress toward auto-release"
-              class="flagship__demo-img"
-              width="2880" height="2240"
-              loading="lazy">
+            <span class="browser-frame">
+              <span class="browser-frame__bar" aria-hidden="true">
+                <span class="terminal__dot terminal__dot--red"></span>
+                <span class="terminal__dot terminal__dot--yellow"></span>
+                <span class="terminal__dot terminal__dot--green"></span>
+                <span class="browser-frame__url">mayageva11.github.io/flakehound</span>
+              </span>
+              <img
+                src="assets/flakehound-dashboard.png"
+                alt="FlakeHound dashboard: failure clusters ranked by impact with NEW chips on unseen bug shapes, test signals grouped by verdict, and the quarantine panel showing progress toward auto-release"
+                class="flagship__demo-img"
+                width="2880" height="2240"
+                loading="lazy">
+            </span>
             <span class="flagship__demo-caption">
               One self-contained HTML file — click to open the live dashboard ↗
             </span>
@@ -379,12 +455,19 @@
     <!-- ─── OTHER PROJECTS ─────────────────────────────────────────── -->
     <section class="section projects" id="projects" aria-labelledby="projects-heading">
       <div class="container">
-        <p class="section__eyebrow">More of my work</p>
+        <p class="section__eyebrow">04 — More of my work</p>
         <h2 class="section__title" id="projects-heading">Other Projects</h2>
 
         <div class="projects__grid">
 
           <article class="project-card reveal">
+            <a href="https://mayageva11.github.io/nexusqa/"
+               class="project-card__media"
+               target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
+              <img src="assets/nexusqa-thumb.png"
+                   alt=""
+                   width="1280" height="800" loading="lazy">
+            </a>
             <div class="project-card__body">
               <h3 class="project-card__title">NexusQA</h3>
               <p class="project-card__tagline">
@@ -400,15 +483,30 @@
                 <li class="skill-tag">GitHub Actions</li>
               </ul>
             </div>
-            <a href="https://github.com/mayageva11/nexusqa"
-               class="btn btn--ghost project-card__link"
-               target="_blank" rel="noopener noreferrer"
-               aria-label="View NexusQA on GitHub">
-              View on GitHub →
-            </a>
+            <div class="project-card__links">
+              <a href="https://mayageva11.github.io/nexusqa/"
+                 class="btn btn--outline project-card__link"
+                 target="_blank" rel="noopener noreferrer"
+                 aria-label="Open NexusQA live demo">
+                Live Demo →
+              </a>
+              <a href="https://github.com/mayageva11/nexusqa"
+                 class="btn btn--ghost project-card__link"
+                 target="_blank" rel="noopener noreferrer"
+                 aria-label="View NexusQA on GitHub">
+                GitHub
+              </a>
+            </div>
           </article>
 
           <article class="project-card reveal">
+            <a href="https://mayageva11.github.io/questforge/"
+               class="project-card__media"
+               target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
+              <img src="assets/questforge-thumb.png"
+                   alt=""
+                   width="1280" height="800" loading="lazy">
+            </a>
             <div class="project-card__body">
               <h3 class="project-card__title">QuestForge</h3>
               <p class="project-card__tagline">
@@ -423,15 +521,26 @@
                 <li class="skill-tag">GitHub Pages</li>
               </ul>
             </div>
-            <a href="https://github.com/mayageva11/questforge"
-               class="btn btn--ghost project-card__link"
-               target="_blank" rel="noopener noreferrer"
-               aria-label="View QuestForge on GitHub">
-              View on GitHub →
-            </a>
+            <div class="project-card__links">
+              <a href="https://mayageva11.github.io/questforge/"
+                 class="btn btn--outline project-card__link"
+                 target="_blank" rel="noopener noreferrer"
+                 aria-label="Open QuestForge live demo">
+                Live Demo →
+              </a>
+              <a href="https://github.com/mayageva11/questforge"
+                 class="btn btn--ghost project-card__link"
+                 target="_blank" rel="noopener noreferrer"
+                 aria-label="View QuestForge on GitHub">
+                GitHub
+              </a>
+            </div>
           </article>
 
           <article class="project-card reveal">
+            <div class="project-card__media project-card__media--gradient project-card__media--educare" aria-hidden="true">
+              <span class="project-card__media-glyph">🎓</span>
+            </div>
             <div class="project-card__body">
               <h3 class="project-card__title">EduCare</h3>
               <p class="project-card__tagline">
@@ -457,6 +566,9 @@
           </article>
 
           <article class="project-card reveal">
+            <div class="project-card__media project-card__media--gradient project-card__media--jobs" aria-hidden="true">
+              <span class="project-card__media-glyph">📬</span>
+            </div>
             <div class="project-card__body">
               <h3 class="project-card__title">Job Dashboard</h3>
               <p class="project-card__tagline">
@@ -486,7 +598,7 @@
     <!-- ─── CONTACT ────────────────────────────────────────────────── -->
     <section class="section contact" id="contact" aria-labelledby="contact-heading">
       <div class="container">
-        <p class="section__eyebrow">Get in touch</p>
+        <p class="section__eyebrow">05 — Get in touch</p>
         <h2 class="section__title" id="contact-heading">Let's connect</h2>
         <p class="contact__sub reveal">
           Open to QA automation roles, open-source collaboration, and good
@@ -538,12 +650,28 @@
 
   <!-- ─── FOOTER ─────────────────────────────────────────────────── -->
   <footer class="footer">
-    <div class="container">
+    <div class="container footer__inner">
       <p class="footer__text">
-        Maya Erusalimsky — Automation Engineer &middot; Built with HTML, CSS &amp; JS &middot; 2026
+        Maya Erusalimsky — QA Automation Engineer &middot; Built with HTML, CSS &amp; JS &middot; 2026
       </p>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <a href="#about"    class="footer__link">About</a>
+        <a href="#journey"  class="footer__link">Journey</a>
+        <a href="#flakehound" class="footer__link">FlakeHound</a>
+        <a href="#projects" class="footer__link">Projects</a>
+        <a href="#contact"  class="footer__link">Contact</a>
+        <a href="https://github.com/mayageva11" class="footer__link"
+           target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/maya-eru/" class="footer__link"
+           target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </nav>
     </div>
   </footer>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" hidden>
+    <span aria-hidden="true">↑</span>
+  </button>
 
   <script src="js/main.js"></script>
 </body>

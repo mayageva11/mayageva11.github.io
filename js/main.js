@@ -189,6 +189,31 @@ if (terminalOutput) {
   }
 }
 
+/* ─── Cursor-tracking glow on cards ──────────────────────────── */
+if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
+  const glowCards = document.querySelectorAll('.project-card, .feature-card, .timeline__card');
+  glowCards.forEach(card => {
+    card.classList.add('glow-card');
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+    });
+  });
+}
+
+/* ─── Back to top ────────────────────────────────────────────── */
+const backToTop = document.getElementById('back-to-top');
+if (backToTop) {
+  window.addEventListener('scroll', () => {
+    backToTop.hidden = window.scrollY < window.innerHeight;
+  }, { passive: true });
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  });
+}
+
 /* ─── Scrollspy — highlight the nav link for the visible section ── */
 const spyTargets = ['about', 'projects', 'contact']
   .map(id => document.getElementById(id))
