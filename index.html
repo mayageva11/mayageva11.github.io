@@ -60,6 +60,7 @@
         <li><a href="#about"      class="nav__link">About</a></li>
         <li><a href="#flakehound" class="nav__link">FlakeHound</a></li>
         <li><a href="#projects"   class="nav__link">Projects</a></li>
+        <li><a href="#ai"         class="nav__link">AI</a></li>
         <li><a href="#why-me"     class="nav__link">Why me</a></li>
         <li><a href="#contact"    class="nav__link">Contact</a></li>
         <li>
@@ -212,7 +213,8 @@
             </div>
           </dl>
 
-          <ul class="skill-cloud" aria-label="Skills" role="list">
+          <p class="skill-hint">Click a skill to see why it earns its place ↓</p>
+          <ul class="skill-cloud" data-inspect="about" aria-label="Skills" role="list">
             <li class="skill-tag">TypeScript</li>
             <li class="skill-tag">Playwright</li>
             <li class="skill-tag">Node.js</li>
@@ -637,6 +639,20 @@
           and my daily engineering. Pragmatically, with fallbacks, never as a gimmick.
         </p>
 
+        <p class="skill-hint reveal">Click a skill to see why it earns its place ↓</p>
+        <ul class="skill-cloud ai__skills reveal" data-inspect="ai" aria-label="AI skills" role="list">
+          <li class="skill-tag">Claude Code</li>
+          <li class="skill-tag">Claude API</li>
+          <li class="skill-tag">Prompt Engineering</li>
+          <li class="skill-tag">Agentic Loops</li>
+          <li class="skill-tag">Cursor</li>
+          <li class="skill-tag">MCP</li>
+          <li class="skill-tag">Ollama</li>
+          <li class="skill-tag">Groq / Llama</li>
+          <li class="skill-tag">LLM Integration</li>
+          <li class="skill-tag">AI-assisted Testing</li>
+        </ul>
+
         <div class="feature-grid feature-grid--three reveal">
 
           <div class="feature-card feature-card--cyan">
@@ -667,6 +683,39 @@
               AI interprets — it is never the source of truth. I build deterministic
               cores with AI at the edges, and treat model failures as first-class
               cases: every AI path degrades gracefully, nothing hangs or lies.
+            </p>
+          </div>
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">💻</span></div>
+            <h3 class="feature-card__title">How I use Claude Code</h3>
+            <p class="feature-card__desc">
+              This site was planned, built, tested, and deployed with Claude Code:
+              the agent explores my repos, drafts a plan I approve, edits the code,
+              verifies it with Playwright screenshots at phone, tablet, and desktop
+              widths, and ships via git — every change human-reviewed.
+            </p>
+          </div>
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">🔁</span></div>
+            <h3 class="feature-card__title">Loop engineering</h3>
+            <p class="feature-card__desc">
+              I run AI in tight feedback loops: generate → run → observe → refine.
+              The model's output is never trusted blind — tests, screenshots, and
+              CI close the loop, so every iteration is verified against reality
+              before it lands.
+            </p>
+          </div>
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">✍️</span></div>
+            <h3 class="feature-card__title">How I write prompts</h3>
+            <p class="feature-card__desc">
+              Prompts as specifications: full context up front, exact names and
+              constraints, explicit do-nots, and labeled placeholders instead of
+              invented facts. I write prompts the way I write test plans —
+              unambiguous in, verifiable out.
             </p>
           </div>
 
@@ -816,6 +865,7 @@
         <a href="#journey"  class="footer__link">Journey</a>
         <a href="#flakehound" class="footer__link">FlakeHound</a>
         <a href="#projects" class="footer__link">Projects</a>
+        <a href="#ai"       class="footer__link">AI</a>
         <a href="#why-me"   class="footer__link">Why me</a>
         <a href="#contact"  class="footer__link">Contact</a>
         <a href="https://github.com/mayageva11" class="footer__link"

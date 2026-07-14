@@ -235,6 +235,83 @@ h1, h2, h3, h4 {
   padding: 0.2rem 0.6rem;
 }
 
+/* ── Skill inspector ────────────────────────────────────────── */
+.skill-hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+  font-style: italic;
+}
+
+/* Chips that became buttons (JS enhancement) */
+.skill-tag--btn {
+  cursor: pointer;
+  font-family: var(--font-body);
+  background: var(--surface-2);
+}
+
+.skill-tag--btn:hover {
+  color: var(--accent);
+  border-color: var(--border-hover);
+}
+
+.skill-tag--active,
+.skill-tag--active:hover {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.skill-inspector {
+  margin-top: 1rem;
+  padding: 1.1rem 1.3rem;
+  background: #0a0e18;
+  border: 1px solid var(--border-hover);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+
+.skill-inspector--in {
+  animation: inspector-in 0.3s ease both;
+}
+
+@keyframes inspector-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.si__cmd {
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.si__name { color: var(--accent); }
+
+.si__row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  color: var(--text);
+}
+
+.si__row + .si__row { margin-top: 0.35rem; }
+
+.si__label {
+  flex-shrink: 0;
+  width: 3.2rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.si__label--why   { color: var(--accent); }
+.si__label--proof { color: #6bcb77; }
+
 /* ════════════════════════════════════════════════════════════════
    NAV
 ════════════════════════════════════════════════════════════════ */
@@ -564,11 +641,15 @@ h1, h2, h3, h4 {
 
 .about__bio strong { color: var(--text); font-weight: 600; }
 
-/* Stats strip */
+/* Stats strip — 2×2 up to desktop, then all 4 in a row */
 .about__stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .about__stats { grid-template-columns: repeat(4, 1fr); }
 }
 
 .about__stat {
@@ -891,11 +972,22 @@ h1, h2, h3, h4 {
 /* ── Feature cards ─────────────────────────────────────────── */
 .flagship__features { margin-bottom: 2.5rem; }
 
+/* Symmetric by design: 1 col on phones, 2 on tablets,
+   4 on desktop (4-card grids) or 3 (--three, 6-card grids → 3+3) */
 .feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
   margin-top: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .feature-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .feature-grid          { grid-template-columns: repeat(4, 1fr); }
+  .feature-grid--three   { grid-template-columns: repeat(3, 1fr); }
 }
 
 .feature-card {
@@ -1047,10 +1139,15 @@ h1, h2, h3, h4 {
 ════════════════════════════════════════════════════════════════ */
 .projects { background: var(--surface); }
 
+/* 4 cards: 1 col on phones, always 2×2 above — never a 3+1 row */
 .projects__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .projects__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 .project-card {
@@ -1188,9 +1285,6 @@ h1, h2, h3, h4 {
   );
 }
 
-.feature-grid--three {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
 
 /* ── AI section ─────────────────────────────────────────────── */
 .ai { background: var(--bg); }
@@ -1200,8 +1294,10 @@ h1, h2, h3, h4 {
   font-size: 1.02rem;
   color: var(--muted);
   line-height: 1.8;
-  margin: -1rem 0 2.25rem;
+  margin: -1rem 0 1.75rem;
 }
+
+.ai__skills { margin-bottom: 2.25rem; }
 
 /* ── Why hire me ────────────────────────────────────────────── */
 .why-me { background: var(--surface); }
@@ -1386,10 +1482,9 @@ h1, h2, h3, h4 {
    RESPONSIVE
 ════════════════════════════════════════════════════════════════ */
 
-/* ── Mobile  < 640px ───────────────────────────────────────── */
-@media (max-width: 639px) {
+/* ── Nav collapses below 800px (6 links need the room) ─────── */
+@media (max-width: 799px) {
 
-  /* Nav — collapse to hamburger */
   .nav__hamburger { display: flex; }
 
   .nav__links {
@@ -1424,6 +1519,15 @@ h1, h2, h3, h4 {
     border-radius: var(--radius-sm);
     width: 100%;
   }
+}
+
+/* ── Mobile  < 640px ───────────────────────────────────────── */
+@media (max-width: 639px) {
+
+  /* Tighter vertical rhythm — phones scroll, don't wander */
+  .section        { padding: 3.5rem 0; }
+  .section__title { margin-bottom: 1.75rem; }
+  .hero__inner    { padding: 2.5rem 0 4.5rem; }
 
   /* Hero */
   .hero__name     { letter-spacing: -0.03em; }
@@ -1433,7 +1537,6 @@ h1, h2, h3, h4 {
   /* Flagship */
   .flagship__title-row   { flex-direction: column; gap: 0.75rem; }
   .flagship__problem     { padding: 1.25rem 1.25rem; }
-  .feature-grid          { grid-template-columns: 1fr; }
   .flagship__ctas .btn   { flex: 1 1 45%; justify-content: center; }
 
   /* Terminal — wrap lines on small screens so nothing looks cut off */
@@ -1449,7 +1552,6 @@ h1, h2, h3, h4 {
   .about__stats { grid-template-columns: 1fr 1fr; }
 
   /* Projects */
-  .projects__grid { grid-template-columns: 1fr; }
   .project-card__body,
   .project-card__links       { padding-inline: 1.25rem; }
   .project-card > .project-card__link { margin-inline: 1.25rem; }
@@ -1467,13 +1569,9 @@ h1, h2, h3, h4 {
   .contact__link   { justify-content: center; }
 }
 
-/* ── Tablet  640px – 1023px ─────────────────────────────────── */
-@media (min-width: 640px) and (max-width: 1023px) {
-  .projects__grid { grid-template-columns: 1fr 1fr; }
-}
 
-/* ── Desktop 640px+ — always show nav links inline ─────────── */
-@media (min-width: 640px) {
+/* ── 800px+ — nav links inline, hamburger hidden ───────────── */
+@media (min-width: 800px) {
   .nav__hamburger { display: none !important; }
 }
 
@@ -1524,6 +1622,8 @@ h1, h2, h3, h4 {
   }
 
   .terminal__body .t-caret { animation: none; }
+
+  .skill-inspector--in { animation: none; }
 
   .btn,
   .project-card,

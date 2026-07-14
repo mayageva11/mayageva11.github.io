@@ -212,6 +212,97 @@ if (terminalOutput) {
   }
 }
 
+/* ─── Skill inspector ─────────────────────────────────────────
+   Click a skill chip → a terminal-style panel "runs"
+   > inspect('Skill') and prints WHY it's good + PROOF I've used it. */
+
+const SKILL_INFO = {
+  'TypeScript':          { why: 'types catch whole bug classes at compile time — refactoring with confidence, APIs that document themselves', proof: 'FlakeHound is strict-mode TS end to end · daily language at Kissterra' },
+  'Playwright':          { why: 'auto-waiting assertions retry until the UI settles — flakiness engineered away, one API for 3 browser engines', proof: '234 tests in NexusQA · E2E suites at Kissterra · even this site was screenshot-verified with it' },
+  'Node.js':             { why: 'one language across tests, tooling, and servers — no context switching, massive ecosystem', proof: 'FlakeHound CLI ships on Node 20+ · NexusQA and Job Dashboard backends' },
+  'React':               { why: 'declarative components make UI state predictable — and testable', proof: 'Job Dashboard frontend · EduCare on React 19' },
+  'Next.js':             { why: 'SSR, API routes, and file routing — a full-stack app in one coherent framework', proof: 'EduCare runs on Next.js 15 with JWT auth and MongoDB' },
+  'Claude AI':           { why: 'best-in-class reasoning over code and language, reliable structured output for real product features', proof: 'FlakeHound\'s hypothesis layer · NexusQA integration' },
+  'Ollama':              { why: 'local models mean privacy, zero cost, and offline operation — the right default for sensitive data', proof: 'FlakeHound\'s first-choice AI provider; Claude API is the fallback' },
+  'GitHub Actions':      { why: 'CI that lives next to the code — matrix builds, marketplace actions, zero infra to babysit', proof: 'FlakeHound is itself a Marketplace action · tag-driven npm releases with provenance' },
+  'MongoDB':             { why: 'flexible documents fit evolving product data without migration pain', proof: 'EduCare\'s student cases, activities, and timetables via Mongoose' },
+  'Python':              { why: 'the fastest path from idea to working script — and the pytest ecosystem is superb', proof: 'production-quality Python alongside TypeScript at Kissterra' },
+  'Express':             { why: 'a minimal, explicit HTTP layer — you see exactly what every route does', proof: 'NexusQA\'s backend API' },
+  'Vitest':              { why: 'fast, ESM-native unit testing with a Jest-compatible API — instant feedback loops', proof: '221 unit tests guarding FlakeHound\'s deterministic core' },
+  'Jest':                { why: 'batteries-included testing — mocks, snapshots, and coverage out of the box', proof: 'EduCare\'s suite with React Testing Library' },
+  'Allure':              { why: 'test reports stakeholders can actually read — history, trends, and failure triage', proof: 'NexusQA\'s reporting pipeline' },
+  'Claude Code':         { why: 'an agent that edits, runs, and verifies inside your repo — not autocomplete, a colleague', proof: 'this entire site: planned, built, tested, and deployed with it — every change human-reviewed' },
+  'Claude API':          { why: 'strong tool use and structured output — dependable enough to build product features on', proof: 'FlakeHound and NexusQA integrations' },
+  'Prompt Engineering':  { why: 'prompts are specifications: full context, exact constraints, explicit do-nots, no invented facts', proof: 'reproducible AI behavior across all my AI-powered projects' },
+  'Agentic Loops':       { why: 'generate → run → observe → refine — verification closes the loop, not vibes', proof: 'every UI change here was screenshot-verified at 3 viewport widths before shipping' },
+  'Cursor':              { why: 'AI pair-programming in the editor — test authoring and refactors at conversation speed', proof: 'daily automation workflow at Kissterra' },
+  'MCP':                 { why: 'a standard protocol wiring AI agents to real tools — git, browsers, databases', proof: 'MCP-Git for automated PR creation in my day job' },
+  'Groq / Llama':        { why: 'near-instant open-model inference with a generous free tier — great for creative generation', proof: 'QuestForge\'s AI-generated quest scenes (~14,400 free requests/day)' },
+  'LLM Integration':     { why: 'pluggable providers, graceful degradation, zero blind trust in model output', proof: 'FlakeHound\'s HypothesisProvider interface — Ollama or Claude behind one contract' },
+  'AI-assisted Testing': { why: 'AI drafts, tests verify — speed without surrendering correctness', proof: 'how I work every day, at Kissterra and in the open' }
+};
+
+document.querySelectorAll('[data-inspect]').forEach(cloud => {
+  const panelId = `skill-inspector-${cloud.dataset.inspect}`;
+
+  /* Build the inspector panel right after the cloud */
+  const panel = document.createElement('div');
+  panel.className = 'skill-inspector';
+  panel.id = panelId;
+  panel.setAttribute('role', 'region');
+  panel.setAttribute('aria-label', 'Skill details');
+  panel.hidden = true;
+  cloud.insertAdjacentElement('afterend', panel);
+
+  let activeBtn = null;
+
+  const close = () => {
+    panel.hidden = true;
+    if (activeBtn) {
+      activeBtn.classList.remove('skill-tag--active');
+      activeBtn.setAttribute('aria-expanded', 'false');
+      activeBtn = null;
+    }
+  };
+
+  /* Progressive enhancement: only chips with an entry become buttons */
+  cloud.querySelectorAll('.skill-tag').forEach(li => {
+    const name = li.textContent.trim();
+    const info = SKILL_INFO[name];
+    if (!info) return;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'skill-tag skill-tag--btn';
+    btn.textContent = name;
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', panelId);
+    li.replaceChildren(btn);
+    li.classList.remove('skill-tag');
+
+    btn.addEventListener('click', () => {
+      if (activeBtn === btn) { close(); return; }
+      close();
+      activeBtn = btn;
+      btn.classList.add('skill-tag--active');
+      btn.setAttribute('aria-expanded', 'true');
+      panel.innerHTML =
+        `<p class="si__cmd">&gt; inspect(<span class="si__name">'${name}'</span>)</p>` +
+        `<p class="si__row"><span class="si__label si__label--why">why</span>${info.why}</p>` +
+        `<p class="si__row"><span class="si__label si__label--proof">proof</span>${info.proof}</p>`;
+      panel.hidden = false;
+      /* restart the entrance animation */
+      panel.classList.remove('skill-inspector--in');
+      void panel.offsetWidth;
+      panel.classList.add('skill-inspector--in');
+    });
+  });
+
+  /* Escape closes the panel */
+  panel.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  cloud.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+});
+
 /* ─── Cursor-tracking glow on cards ──────────────────────────── */
 if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
   const glowCards = document.querySelectorAll('.project-card, .feature-card, .timeline__card');
@@ -238,7 +329,7 @@ if (backToTop) {
 }
 
 /* ─── Scrollspy — highlight the nav link for the visible section ── */
-const spyTargets = ['about', 'flakehound', 'projects', 'why-me', 'contact']
+const spyTargets = ['about', 'flakehound', 'projects', 'ai', 'why-me', 'contact']
   .map(id => document.getElementById(id))
   .filter(Boolean);
 
