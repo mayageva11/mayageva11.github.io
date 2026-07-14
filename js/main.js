@@ -57,7 +57,7 @@ if (!prefersReducedMotion) {
 
 /* ─── FlakeHound terminal demo ─────────────────────────────────
    Tells the real pipeline story, step by step:
-   1. context — CI just finished a test run, JUnit XML is on disk
+   1. context - CI just finished a test run, JUnit XML is on disk
    2. the flakehound command is typed character by character
    3. spinner: reading the JUnit XML history
    4. confirmed ingest summary
@@ -68,26 +68,26 @@ if (!prefersReducedMotion) {
 const TERM_SPINNER_FRAMES = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 
 /* Step types:
-   comment — dim line printed instantly (context, not typed)
-   cmd     — typed character by character after a "$ " prompt
-   spin    — transient spinner line; disappears when the step ends
-   line    — printed line (pause = extra ms before it appears)     */
+   comment - dim line printed instantly (context, not typed)
+   cmd     - typed character by character after a "$ " prompt
+   spin    - transient spinner line; disappears when the step ends
+   line    - printed line (pause = extra ms before it appears)     */
 const TERM_SCRIPT = [
-  { type: 'comment', text: '# CI test run just finished — the runner saved its results as JUnit XML' },
+  { type: 'comment', text: '# CI test run just finished - the runner saved its results as JUnit XML' },
   { type: 'cmd',     text: 'npx flakehound analyze --input "test-results/**/*.xml"' },
   { type: 'spin',    text: ' reading JUnit XML run history…', frames: 14 },
-  { type: 'line',    text: '✓ ingested 4 XML files — a history of 12 runs of the test suite', cls: 't-green' },
+  { type: 'line',    text: '✓ ingested 4 XML files - a history of 12 runs of the test suite', cls: 't-green' },
   { type: 'line',    text: '' },
   { type: 'spin',    text: ' scoring flakiness · isolating regressions · clustering failures by root cause…', frames: 18 },
-  { type: 'line',    text: 'Regressions (1) — broken code, not flaky', cls: 't-red' },
-  { type: 'line',    text: '  ✗ shop.spec.ts > payment — failing in 100% of runs since commit bbb2222', cls: 't-red' },
+  { type: 'line',    text: 'Regressions (1) - broken code, not flaky', cls: 't-red' },
+  { type: 'line',    text: '  ✗ shop.spec.ts > payment - failing in 100% of runs since commit bbb2222', cls: 't-red' },
   { type: 'line',    text: '      passed before that commit → this is a hard regression, someone broke it', cls: 't-dim' },
   { type: 'line',    text: '' },
-  { type: 'line',    text: 'Flaky tests (1) — quarantine candidates', cls: 't-yellow', pause: 300 },
-  { type: 'line',    text: '  ~ shop.spec.ts > checkout — passed AND failed on the same commit', cls: 't-yellow' },
+  { type: 'line',    text: 'Flaky tests (1) - quarantine candidates', cls: 't-yellow', pause: 300 },
+  { type: 'line',    text: '  ~ shop.spec.ts > checkout - passed AND failed on the same commit', cls: 't-yellow' },
   { type: 'line',    text: '      same code, different result → genuinely flaky, not a regression', cls: 't-dim' },
   { type: 'line',    text: '' },
-  { type: 'line',    text: 'Failure clusters — 5 failures share just 2 root causes', cls: 't-cyan', pause: 300 },
+  { type: 'line',    text: 'Failure clusters - 5 failures share just 2 root causes', cls: 't-cyan', pause: 300 },
   { type: 'line',    text: '  1. [7a7c1180] ×3  AssertionError: cart total ≠ charged amount' },
   { type: 'line',    text: '  2. [a8a64e2d] ×2  TimeoutError: waiting for locator(\'#pay-button\')' },
   { type: 'line',    text: '      → fix 2 bugs, not 5 failures', cls: 't-dim' },
@@ -217,31 +217,31 @@ if (terminalOutput) {
    > inspect('Skill') and prints WHY it's good + PROOF I've used it. */
 
 const SKILL_INFO = {
-  'TypeScript':          { why: 'types catch whole bug classes at compile time — refactoring with confidence, APIs that document themselves', proof: 'FlakeHound is strict-mode TS end to end · daily language at Kissterra' },
-  'Playwright':          { why: 'auto-waiting assertions retry until the UI settles — flakiness engineered away, one API for 3 browser engines', proof: '234 tests in NexusQA · E2E suites at Kissterra · even this site was screenshot-verified with it' },
-  'Node.js':             { why: 'one language across tests, tooling, and servers — no context switching, massive ecosystem', proof: 'FlakeHound CLI ships on Node 20+ · NexusQA and Job Dashboard backends' },
-  'React':               { why: 'declarative components make UI state predictable — and testable', proof: 'Job Dashboard frontend · EduCare on React 19' },
-  'Next.js':             { why: 'SSR, API routes, and file routing — a full-stack app in one coherent framework', proof: 'EduCare runs on Next.js 15 with JWT auth and MongoDB' },
+  'TypeScript':          { why: 'types catch whole bug classes at compile time - refactoring with confidence, APIs that document themselves', proof: 'FlakeHound is strict-mode TS end to end · daily language at Kissterra' },
+  'Playwright':          { why: 'auto-waiting assertions retry until the UI settles - flakiness engineered away, one API for 3 browser engines', proof: '234 tests in NexusQA · E2E suites at Kissterra · even this site was screenshot-verified with it' },
+  'Node.js':             { why: 'one language across tests, tooling, and servers - no context switching, massive ecosystem', proof: 'FlakeHound CLI ships on Node 20+ · NexusQA and Job Dashboard backends' },
+  'React':               { why: 'declarative components make UI state predictable - and testable', proof: 'Job Dashboard frontend · EduCare on React 19' },
+  'Next.js':             { why: 'SSR, API routes, and file routing - a full-stack app in one coherent framework', proof: 'EduCare runs on Next.js 15 with JWT auth and MongoDB' },
   'Claude AI':           { why: 'best-in-class reasoning over code and language, reliable structured output for real product features', proof: 'FlakeHound\'s hypothesis layer · NexusQA integration' },
-  'Ollama':              { why: 'local models mean privacy, zero cost, and offline operation — the right default for sensitive data', proof: 'FlakeHound\'s first-choice AI provider; Claude API is the fallback' },
-  'GitHub Actions':      { why: 'CI that lives next to the code — matrix builds, marketplace actions, zero infra to babysit', proof: 'FlakeHound is itself a Marketplace action · tag-driven npm releases with provenance' },
+  'Ollama':              { why: 'local models mean privacy, zero cost, and offline operation - the right default for sensitive data', proof: 'FlakeHound\'s first-choice AI provider; Claude API is the fallback' },
+  'GitHub Actions':      { why: 'CI that lives next to the code - matrix builds, marketplace actions, zero infra to babysit', proof: 'FlakeHound is itself a Marketplace action · tag-driven npm releases with provenance' },
   'MongoDB':             { why: 'flexible documents fit evolving product data without migration pain', proof: 'EduCare\'s student cases, activities, and timetables via Mongoose' },
-  'Python':              { why: 'the fastest path from idea to working script — and the pytest ecosystem is superb', proof: 'production-quality Python alongside TypeScript at Kissterra' },
-  'Express':             { why: 'a minimal, explicit HTTP layer — you see exactly what every route does', proof: 'NexusQA\'s backend API' },
-  'Vitest':              { why: 'fast, ESM-native unit testing with a Jest-compatible API — instant feedback loops', proof: '221 unit tests guarding FlakeHound\'s deterministic core' },
-  'Jest':                { why: 'batteries-included testing — mocks, snapshots, and coverage out of the box', proof: 'EduCare\'s suite with React Testing Library' },
-  'Allure':              { why: 'test reports stakeholders can actually read — history, trends, and failure triage', proof: 'NexusQA\'s reporting pipeline' },
-  'Claude Code':         { why: 'an agent that edits, runs, and verifies inside your repo — not autocomplete, a colleague', proof: 'this entire site: planned, built, tested, and deployed with it — every change human-reviewed' },
-  'Claude API':          { why: 'strong tool use and structured output — dependable enough to build product features on', proof: 'FlakeHound and NexusQA integrations' },
+  'Python':              { why: 'the fastest path from idea to working script - and the pytest ecosystem is superb', proof: 'production-quality Python alongside TypeScript at Kissterra' },
+  'Express':             { why: 'a minimal, explicit HTTP layer - you see exactly what every route does', proof: 'NexusQA\'s backend API' },
+  'Vitest':              { why: 'fast, ESM-native unit testing with a Jest-compatible API - instant feedback loops', proof: '221 unit tests guarding FlakeHound\'s deterministic core' },
+  'Jest':                { why: 'batteries-included testing - mocks, snapshots, and coverage out of the box', proof: 'EduCare\'s suite with React Testing Library' },
+  'Allure':              { why: 'test reports stakeholders can actually read - history, trends, and failure triage', proof: 'NexusQA\'s reporting pipeline' },
+  'Claude Code':         { why: 'an agent that edits, runs, and verifies inside your repo - not autocomplete, a colleague', proof: 'this entire site: planned, built, tested, and deployed with it - every change human-reviewed' },
+  'Claude API':          { why: 'strong tool use and structured output - dependable enough to build product features on', proof: 'FlakeHound and NexusQA integrations' },
   'Prompt Engineering':  { why: 'prompts are specifications: full context, exact constraints, explicit do-nots, no invented facts', proof: 'reproducible AI behavior across all my AI-powered projects' },
-  'Agentic Loops':       { why: 'generate → run → observe → refine — verification closes the loop, not vibes', proof: 'every UI change here was screenshot-verified at 3 viewport widths before shipping' },
-  'Cursor':              { why: 'AI pair-programming in the editor — test authoring and refactors at conversation speed', proof: 'daily automation workflow at Kissterra' },
-  'MCP':                 { why: 'a standard protocol wiring AI agents to real tools — git, browsers, databases', proof: 'MCP-Git for automated PR creation in my day job' },
-  'Groq / Llama':        { why: 'near-instant open-model inference with a generous free tier — great for creative generation', proof: 'QuestForge\'s AI-generated quest scenes (~14,400 free requests/day)' },
-  'LLM Integration':     { why: 'pluggable providers, graceful degradation, zero blind trust in model output', proof: 'FlakeHound\'s HypothesisProvider interface — Ollama or Claude behind one contract' },
-  'AI-assisted Testing': { why: 'AI drafts, tests verify — speed without surrendering correctness', proof: 'how I work every day, at Kissterra and in the open' },
-  'ts-morph':            { why: 'programmatic AST edits that preserve formatting — refactor code the way a careful human would, never with regex', proof: 'FlakeHound\'s quarantine tags tests via surgical ts-morph edits, reviewable in a PR' },
-  'JUnit XML':           { why: 'the one test-result format every runner and CI already emits — integrate everything, write zero plugins', proof: 'FlakeHound\'s only input: Jest, Playwright, pytest, and JUnit all speak it' }
+  'Agentic Loops':       { why: 'generate → run → observe → refine - verification closes the loop, not vibes', proof: 'every UI change here was screenshot-verified at 3 viewport widths before shipping' },
+  'Cursor':              { why: 'AI pair-programming in the editor - test authoring and refactors at conversation speed', proof: 'daily automation workflow at Kissterra' },
+  'MCP':                 { why: 'a standard protocol wiring AI agents to real tools - git, browsers, databases', proof: 'MCP-Git for automated PR creation in my day job' },
+  'Groq / Llama':        { why: 'near-instant open-model inference with a generous free tier - great for creative generation', proof: 'QuestForge\'s AI-generated quest scenes (~14,400 free requests/day)' },
+  'LLM Integration':     { why: 'pluggable providers, graceful degradation, zero blind trust in model output', proof: 'FlakeHound\'s HypothesisProvider interface - Ollama or Claude behind one contract' },
+  'AI-assisted Testing': { why: 'AI drafts, tests verify - speed without surrendering correctness', proof: 'how I work every day, at Kissterra and in the open' },
+  'ts-morph':            { why: 'programmatic AST edits that preserve formatting - refactor code the way a careful human would, never with regex', proof: 'FlakeHound\'s quarantine tags tests via surgical ts-morph edits, reviewable in a PR' },
+  'JUnit XML':           { why: 'the one test-result format every runner and CI already emits - integrate everything, write zero plugins', proof: 'FlakeHound\'s only input: Jest, Playwright, pytest, and JUnit all speak it' }
 };
 
 document.querySelectorAll('[data-inspect]').forEach(cloud => {
@@ -310,8 +310,25 @@ document.querySelectorAll('[data-inspect]').forEach(cloud => {
    Inner links/buttons keep their own behavior.                  */
 document.querySelectorAll('[data-href]').forEach(card => {
   card.addEventListener('click', e => {
-    if (e.target.closest('a, button')) return;   /* real links win */
+    /* real links, buttons, and the architecture panel keep their own behavior */
+    if (e.target.closest('a, button, .project-card__arch')) return;
     window.open(card.dataset.href, '_blank', 'noopener');
+  });
+});
+
+/* ─── Architecture diagram toggles ───────────────────────────── */
+document.querySelectorAll('.arch-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const panel = document.getElementById(btn.getAttribute('aria-controls'));
+    const opening = panel.hidden;
+    panel.hidden = !opening;
+    btn.setAttribute('aria-expanded', String(opening));
+    btn.textContent = opening ? 'Architecture ⌃' : 'Architecture ⌄';
+    if (opening) {
+      panel.classList.remove('project-card__arch--in');
+      void panel.offsetWidth;
+      panel.classList.add('project-card__arch--in');
+    }
   });
 });
 
@@ -340,7 +357,7 @@ if (backToTop) {
   });
 }
 
-/* ─── Scrollspy — highlight the nav link for the visible section ── */
+/* ─── Scrollspy - highlight the nav link for the visible section ── */
 const spyTargets = ['about', 'flakehound', 'projects', 'ai', 'why-me', 'contact']
   .map(id => document.getElementById(id))
   .filter(Boolean);

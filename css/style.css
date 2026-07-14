@@ -1069,6 +1069,69 @@ h1, h2, h3, h4 {
   line-height: 1.65;
 }
 
+/* ── Pipeline diagram ──────────────────────────────────────── */
+.flagship__pipeline { margin-bottom: 3rem; }
+
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.flow__node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  flex: 1 1 150px;
+  padding: 1rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  transition: border-color var(--ease), box-shadow var(--ease);
+}
+
+.flow__node:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-glow);
+}
+
+.flow__node--core {
+  border-color: rgba(0, 212, 255, 0.4);
+  box-shadow: 0 0 24px rgba(0, 212, 255, 0.08);
+}
+
+.flow__node--ai {
+  border-style: dashed;
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.flow__icon  { font-size: 1.4rem; line-height: 1.3; }
+
+.flow__label {
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.flow__sub {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.flow__arrow {
+  align-self: center;
+  color: var(--accent);
+  font-size: 1.1rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
 /* ── Tech cloud ────────────────────────────────────────────── */
 .flagship__tech { margin-bottom: 2.5rem; }
 
@@ -1273,6 +1336,110 @@ h1, h2, h3, h4 {
   align-self: flex-start;
 }
 
+/* ── Architecture diagrams (toggled per card) ──────────────── */
+.project-card__arch {
+  padding: 0 1.75rem;
+}
+
+.project-card__arch--in { animation: inspector-in 0.3s ease both; }
+
+.arch {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: #0a0e18;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.arch__node {
+  padding: 0.55rem 0.8rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.arch__node strong {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.arch__node small {
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+
+/* External services: dashed violet, like the pipeline's AI node */
+.arch__node--ext {
+  border-style: dashed;
+  border-color: rgba(124, 58, 237, 0.45);
+}
+
+/* Connector: vertical line with a pulsing data dot */
+.arch__edge {
+  position: relative;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.arch__edge::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  margin-left: -0.75px;
+  background: rgba(0, 212, 255, 0.3);
+}
+
+.arch__edge::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(0, 212, 255, 0.8);
+  animation: arch-pulse 1.5s linear infinite;
+}
+
+@keyframes arch-pulse {
+  from { transform: translateY(0);    opacity: 1; }
+  to   { transform: translateY(25px); opacity: 0.15; }
+}
+
+.arch__edge span {
+  position: absolute;
+  left: calc(50% + 9px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Parallel branches */
+.arch__split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 0.6rem;
+}
+
+.arch__col {
+  display: flex;
+  flex-direction: column;
+}
+
+.arch__col .arch__node { flex: 1; }
+
 /* Cursor-tracking glow — --mx/--my set by main.js on mousemove */
 .glow-card { position: relative; }
 
@@ -1370,6 +1537,31 @@ h1, h2, h3, h4 {
   font-size: 0.875rem;
   color: var(--muted);
   line-height: 1.65;
+}
+
+/* Mini flow diagram on project cards */
+.card-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.45rem;
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.68rem;
+}
+
+.card-flow span {
+  padding: 0.22rem 0.55rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.card-flow i {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .project-card__link { align-self: flex-start; }
@@ -1591,6 +1783,10 @@ h1, h2, h3, h4 {
   .flagship__problem     { padding: 1.25rem 1.25rem; }
   .flagship__ctas .btn   { flex: 1 1 45%; justify-content: center; }
 
+  /* Pipeline diagram becomes a vertical flow on phones */
+  .flow { flex-direction: column; align-items: stretch; }
+  .flow__arrow { transform: rotate(90deg); align-self: center; }
+
   /* Terminal — wrap lines on small screens so nothing looks cut off */
   .terminal__body {
     font-size: 0.7rem;
@@ -1606,6 +1802,7 @@ h1, h2, h3, h4 {
   /* Projects */
   .project-card__body,
   .project-card__links       { padding-inline: 1.25rem; }
+  .project-card__arch        { padding-inline: 1.25rem; }
   .project-card > .project-card__link { margin-inline: 1.25rem; }
   .project-card              { padding-bottom: 1.25rem; }
 
@@ -1677,6 +1874,9 @@ h1, h2, h3, h4 {
   .terminal__body .t-caret { animation: none; }
 
   .skill-inspector--in { animation: none; }
+
+  .arch__edge::after { animation: none; }
+  .project-card__arch--in { animation: none; }
 
   .btn,
   .project-card,
