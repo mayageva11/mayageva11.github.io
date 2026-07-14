@@ -1134,6 +1134,22 @@ h1, h2, h3, h4 {
 
 .flagship__demo-link:hover .flagship__demo-caption { color: var(--accent); }
 
+/* ── Living demo block ─────────────────────────────────────── */
+.flagship__living {
+  margin-top: 3rem;
+  padding: 1.75rem 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+}
+
+.flagship__living .flagship__ctas { margin-top: 1.25rem; }
+
+@media (max-width: 639px) {
+  .flagship__living { padding: 1.25rem; }
+}
+
 /* ════════════════════════════════════════════════════════════════
    OTHER PROJECTS
 ════════════════════════════════════════════════════════════════ */
