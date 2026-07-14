@@ -238,7 +238,7 @@ if (backToTop) {
 }
 
 /* ─── Scrollspy — highlight the nav link for the visible section ── */
-const spyTargets = ['about', 'projects', 'contact']
+const spyTargets = ['about', 'flakehound', 'projects', 'why-me', 'contact']
   .map(id => document.getElementById(id))
   .filter(Boolean);
 

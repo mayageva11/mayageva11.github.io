@@ -57,9 +57,11 @@
       </a>
 
       <ul class="nav__links" id="nav-links" role="list">
-        <li><a href="#about"    class="nav__link">About</a></li>
-        <li><a href="#projects" class="nav__link">Projects</a></li>
-        <li><a href="#contact"  class="nav__link">Contact</a></li>
+        <li><a href="#about"      class="nav__link">About</a></li>
+        <li><a href="#flakehound" class="nav__link">FlakeHound</a></li>
+        <li><a href="#projects"   class="nav__link">Projects</a></li>
+        <li><a href="#why-me"     class="nav__link">Why me</a></li>
+        <li><a href="#contact"    class="nav__link">Contact</a></li>
         <li>
           <a href="https://www.linkedin.com/in/maya-eru/"
              class="btn btn--outline btn--sm"
@@ -202,11 +204,11 @@
             </div>
             <div class="about__stat">
               <dt>Open-source flagship</dt>
-              <dd>npm&nbsp;+&nbsp;Marketplace</dd>
+              <dd>npm + Marketplace</dd>
             </div>
             <div class="about__stat">
               <dt>AI integration</dt>
-              <dd>Claude&nbsp;API&nbsp;·&nbsp;Ollama</dd>
+              <dd>Claude API · Ollama</dd>
             </div>
           </dl>
 
@@ -624,10 +626,134 @@
       </div>
     </section>
 
+    <!-- ─── AI IN PRACTICE ─────────────────────────────────────────── -->
+    <section class="section ai" id="ai" aria-labelledby="ai-heading">
+      <div class="container">
+        <p class="section__eyebrow">05 — AI in practice</p>
+        <h2 class="section__title" id="ai-heading">How I Use AI</h2>
+
+        <p class="ai__intro reveal">
+          AI isn't a buzzword on this page — it's a working layer in my products
+          and my daily engineering. Pragmatically, with fallbacks, never as a gimmick.
+        </p>
+
+        <div class="feature-grid feature-grid--three reveal">
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">🧠</span></div>
+            <h3 class="feature-card__title">In my products</h3>
+            <p class="feature-card__desc">
+              FlakeHound ships a pluggable AI hypothesis layer — a local Ollama model
+              first (private, zero cost), the Claude API as fallback. QuestForge
+              generates story scenes with Groq + Llama 3.1. NexusQA integrates the
+              Claude API into its test platform.
+            </p>
+          </div>
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">⚙️</span></div>
+            <h3 class="feature-card__title">In my workflow</h3>
+            <p class="feature-card__desc">
+              At work: Cursor for code generation and MCP-Git for automated PR
+              creation, accelerating day-to-day automation. This site itself was
+              built and deployed with Claude Code — AI-assisted, human-reviewed.
+            </p>
+          </div>
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">🧭</span></div>
+            <h3 class="feature-card__title">My philosophy</h3>
+            <p class="feature-card__desc">
+              AI interprets — it is never the source of truth. I build deterministic
+              cores with AI at the edges, and treat model failures as first-class
+              cases: every AI path degrades gracefully, nothing hangs or lies.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── WHY HIRE ME ────────────────────────────────────────────── -->
+    <section class="section why-me" id="why-me" aria-labelledby="why-heading">
+      <div class="container">
+        <p class="section__eyebrow">06 — Why hire me</p>
+        <h2 class="section__title" id="why-heading">What You Get</h2>
+
+        <div class="feature-grid feature-grid--three reveal">
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">🚀</span></div>
+            <h3 class="feature-card__title">A QA engineer who ships</h3>
+            <p class="feature-card__desc">
+              Beyond finding bugs — I build and publish production tooling:
+              npm packages, a GitHub Marketplace action, live dashboards.
+              I understand software from the builder's side.
+            </p>
+          </div>
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">🛡️</span></div>
+            <h3 class="feature-card__title">Quality as a craft</h3>
+            <p class="feature-card__desc">
+              500+ automated tests in CI/CD, test strategy design, production
+              issue investigation — quality that release cycles can lean on,
+              sprint after sprint.
+            </p>
+          </div>
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">⚡</span></div>
+            <h3 class="feature-card__title">Speed with substance</h3>
+            <p class="feature-card__desc">
+              Five projects shipped in one month — a CLI tool, an E2E platform,
+              full-stack apps. I learn new stacks fast and turn ideas into
+              working, tested software.
+            </p>
+          </div>
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">🤝</span></div>
+            <h3 class="feature-card__title">A team multiplier</h3>
+            <p class="feature-card__desc">
+              Agile/Scrum native — clear pull requests, documentation the next
+              reader can actually use, and honest communication with developers
+              and product alike.
+            </p>
+          </div>
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">📈</span></div>
+            <h3 class="feature-card__title">Owner mentality</h3>
+            <p class="feature-card__desc">
+              I maintain what I ship: versioned releases, CI pipelines, issue
+              triage, auto-publishing with provenance. Open source taught me
+              accountability no classroom can.
+            </p>
+          </div>
+
+          <div class="feature-card feature-card--cyan">
+            <div class="feature-card__icon-box" aria-hidden="true"><span class="feature-card__icon">🎯</span></div>
+            <h3 class="feature-card__title">Ready on day one</h3>
+            <p class="feature-card__desc">
+              Playwright, TypeScript, API testing, CI/CD, JIRA, Git — the exact
+              stack most teams run today, already proven in a production
+              Agile environment.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="why-me__cta reveal">
+          <a href="#contact" class="btn btn--primary">Sound like a fit? Let's talk →</a>
+        </div>
+      </div>
+    </section>
+
     <!-- ─── CONTACT ────────────────────────────────────────────────── -->
     <section class="section contact" id="contact" aria-labelledby="contact-heading">
       <div class="container">
-        <p class="section__eyebrow">05 — Get in touch</p>
+        <p class="section__eyebrow">07 — Get in touch</p>
         <h2 class="section__title" id="contact-heading">Let's connect</h2>
         <p class="contact__sub reveal">
           Open to QA automation roles, open-source collaboration, and good
@@ -690,6 +816,7 @@
         <a href="#journey"  class="footer__link">Journey</a>
         <a href="#flakehound" class="footer__link">FlakeHound</a>
         <a href="#projects" class="footer__link">Projects</a>
+        <a href="#why-me"   class="footer__link">Why me</a>
         <a href="#contact"  class="footer__link">Contact</a>
         <a href="https://github.com/mayageva11" class="footer__link"
            target="_blank" rel="noopener noreferrer">GitHub</a>

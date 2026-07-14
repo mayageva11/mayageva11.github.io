@@ -34,6 +34,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;   /* iOS Safari needs it on html, not just body */
 }
 
 body {
@@ -578,6 +579,8 @@ h1, h2, h3, h4 {
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  min-width: 0;                     /* let grid tracks shrink below content */
+  overflow-wrap: break-word;
 }
 
 .about__stat dd {
@@ -694,6 +697,7 @@ h1, h2, h3, h4 {
 .flagship {
   position: relative;
   background: var(--bg);
+  overflow: hidden;   /* contain the ambient glow pseudo-element */
 }
 
 /* Violet→cyan gradient bar across the top */
@@ -860,7 +864,8 @@ h1, h2, h3, h4 {
   overflow-x: auto;
   min-height: 470px;
   margin: 0;
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
   tab-size: 2;
 }
 
@@ -1159,6 +1164,55 @@ h1, h2, h3, h4 {
   );
 }
 
+/* Cyan variant — AI and Why-hire-me sections */
+.feature-card--cyan:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-glow);
+}
+
+.feature-card--cyan .feature-card__icon-box {
+  background: var(--accent-dim);
+  border-color: rgba(0, 212, 255, 0.25);
+}
+
+.feature-card--cyan:hover .feature-card__icon-box {
+  background: rgba(0, 212, 255, 0.18);
+  border-color: rgba(0, 212, 255, 0.5);
+}
+
+.feature-card--cyan.glow-card::after {
+  background: radial-gradient(
+    380px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(0, 212, 255, 0.08),
+    transparent 65%
+  );
+}
+
+.feature-grid--three {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* ── AI section ─────────────────────────────────────────────── */
+.ai { background: var(--bg); }
+
+.ai__intro {
+  max-width: 620px;
+  font-size: 1.02rem;
+  color: var(--muted);
+  line-height: 1.8;
+  margin: -1rem 0 2.25rem;
+}
+
+/* ── Why hire me ────────────────────────────────────────────── */
+.why-me { background: var(--surface); }
+
+.why-me .feature-card { background: var(--bg); }
+
+.why-me__cta {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
 .project-card:hover {
   border-color: var(--border-hover);
   box-shadow: var(--shadow-glow);
@@ -1382,11 +1436,13 @@ h1, h2, h3, h4 {
   .feature-grid          { grid-template-columns: 1fr; }
   .flagship__ctas .btn   { flex: 1 1 45%; justify-content: center; }
 
-  /* Terminal — keep the CLI output readable on small screens */
+  /* Terminal — wrap lines on small screens so nothing looks cut off */
   .terminal__body {
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     padding: 1rem;
-    min-height: 400px;
+    min-height: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   /* About stats — two columns on phones */
