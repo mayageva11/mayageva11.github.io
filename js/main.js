@@ -3,8 +3,14 @@ const nav       = document.getElementById('nav');
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.getElementById('nav-links');
 
+const scrollProgress = document.getElementById('scroll-progress');
+
 window.addEventListener('scroll', () => {
   nav.classList.toggle('nav--scrolled', window.scrollY > 20);
+  if (scrollProgress) {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    scrollProgress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+  }
 }, { passive: true });
 
 /* ─── Hamburger toggle ───────────────────────────────────────── */
@@ -316,33 +322,84 @@ document.querySelectorAll('[data-href]').forEach(card => {
   });
 });
 
-/* ─── Architecture diagram toggles ───────────────────────────── */
-document.querySelectorAll('.arch-toggle').forEach(btn => {
+/* ─── Architecture diagram toggles ───────────────────────────
+   Accordion: opening one closes the others, and while any panel
+   is open the grid top-aligns so the sibling card in the same
+   row keeps its natural height instead of stretching.          */
+const archToggles = [...document.querySelectorAll('.arch-toggle')];
+const projectsGrid = document.querySelector('.projects__grid');
+
+function setArchOpen(btn, open) {
+  const panel = document.getElementById(btn.getAttribute('aria-controls'));
+  panel.hidden = !open;
+  btn.setAttribute('aria-expanded', String(open));
+  btn.textContent = open ? 'Architecture ⌃' : 'Architecture ⌄';
+  if (open) {
+    panel.classList.remove('project-card__arch--in');
+    void panel.offsetWidth;
+    panel.classList.add('project-card__arch--in');
+  }
+}
+
+archToggles.forEach(btn => {
   btn.addEventListener('click', () => {
-    const panel = document.getElementById(btn.getAttribute('aria-controls'));
-    const opening = panel.hidden;
-    panel.hidden = !opening;
-    btn.setAttribute('aria-expanded', String(opening));
-    btn.textContent = opening ? 'Architecture ⌃' : 'Architecture ⌄';
-    if (opening) {
-      panel.classList.remove('project-card__arch--in');
-      void panel.offsetWidth;
-      panel.classList.add('project-card__arch--in');
+    const opening = document.getElementById(btn.getAttribute('aria-controls')).hidden;
+    archToggles.forEach(other => { if (other !== btn) setArchOpen(other, false); });
+    setArchOpen(btn, opening);
+    if (projectsGrid) {
+      projectsGrid.classList.toggle('projects__grid--arch-open', opening);
     }
   });
 });
 
-/* ─── Cursor-tracking glow on cards ──────────────────────────── */
+/* ─── Cursor-tracking glow + subtle 3D tilt on cards ─────────── */
 if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
   const glowCards = document.querySelectorAll('.project-card, .feature-card, .timeline__card');
   glowCards.forEach(card => {
     card.classList.add('glow-card');
+    const tilts = card.classList.contains('project-card');
+    if (tilts) card.classList.add('tilt');
+
     card.addEventListener('mousemove', e => {
       const rect = card.getBoundingClientRect();
-      card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-      card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mx', `${x}px`);
+      card.style.setProperty('--my', `${y}px`);
+      if (tilts) {
+        const rx = ((y / rect.height) - 0.5) * -3;   /* max ±1.5deg each way */
+        const ry = ((x / rect.width)  - 0.5) *  3;
+        card.style.transform =
+          `perspective(800px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-3px)`;
+      }
     });
+
+    if (tilts) {
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    }
   });
+}
+
+/* ─── Copy email to clipboard ────────────────────────────────── */
+const copyEmailBtn = document.getElementById('copy-email');
+if (copyEmailBtn) {
+  if (!navigator.clipboard) {
+    copyEmailBtn.hidden = true;   /* no clipboard API - the mailto CTA remains */
+  } else {
+    copyEmailBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText('mayageva11@gmail.com');
+        copyEmailBtn.textContent = 'Copied ✓';
+        copyEmailBtn.classList.add('contact__copy--done');
+        setTimeout(() => {
+          copyEmailBtn.textContent = 'Copy';
+          copyEmailBtn.classList.remove('contact__copy--done');
+        }, 2000);
+      } catch {
+        /* clipboard permission denied - leave the button as-is */
+      }
+    });
+  }
 }
 
 /* ─── Back to top ────────────────────────────────────────────── */

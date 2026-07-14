@@ -66,6 +66,20 @@ ul       { list-style: none; }
 }
 ::-webkit-scrollbar-thumb:hover { background: #1e2740; }
 
+/* ─── Scroll progress bar ───────────────────────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  z-index: 200;
+  background: linear-gradient(90deg, var(--accent), var(--violet));
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
 /* ─── Skip link ─────────────────────────────────────────────── */
 .skip-link {
   position: absolute;
@@ -609,8 +623,28 @@ h1, h2, h3, h4 {
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1.04;
-  color: var(--text);
   margin-bottom: 0.5rem;
+  /* one-time gradient sheen sweep after the entrance choreography */
+  color: transparent;
+  background-image: linear-gradient(
+    100deg,
+    var(--text) 42%,
+    #ffffff 50%,
+    var(--accent) 53%,
+    var(--text) 60%
+  );
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation:
+    fade-up 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) 0.14s both,
+    name-shimmer 1.4s ease-in-out 1.1s 1 forwards;
+}
+
+@keyframes name-shimmer {
+  from { background-position: 100% 0; }
+  to   { background-position: 0% 0; }
 }
 
 .hero__role {
@@ -1254,6 +1288,10 @@ h1, h2, h3, h4 {
   .projects__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* While an architecture panel is open, top-align the row so the
+   sibling card doesn't stretch to match the expanded one */
+.projects__grid--arch-open { align-items: start; }
+
 .project-card {
   position: relative;
   display: flex;
@@ -1525,6 +1563,17 @@ h1, h2, h3, h4 {
 
 .project-card[data-href] { cursor: pointer; }
 
+/* 3D tilt (transform set by main.js on pointer devices) */
+.project-card.tilt {
+  will-change: transform;
+}
+.project-card.tilt:not(:hover) {
+  transition:
+    border-color var(--ease),
+    box-shadow var(--ease),
+    transform 0.4s ease;
+}
+
 .project-card__body { display: flex; flex-direction: column; gap: 0.75rem; }
 
 .project-card__title {
@@ -1584,11 +1633,27 @@ h1, h2, h3, h4 {
   text-wrap: balance;
 }
 
-.contact__cta-wrap { margin-bottom: 1.5rem; }
+.contact__cta-wrap {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
 
 .contact__cta {
   font-size: 1rem;
   padding: 0.9rem 1.9rem;
+}
+
+.contact__copy { font-size: 0.9rem; }
+
+.contact__copy--done,
+.contact__copy--done:hover {
+  color: #6bcb77;
+  border-color: rgba(107, 203, 119, 0.5);
+  background: rgba(107, 203, 119, 0.08);
 }
 
 .contact__links {
@@ -1702,6 +1767,15 @@ h1, h2, h3, h4 {
   color: var(--accent);
   border-color: var(--border-hover);
   box-shadow: var(--shadow-glow);
+}
+
+/* ─── Rendering performance — skip layout of far-below-fold sections */
+.projects,
+.ai,
+.why-me,
+.contact {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1848,6 +1922,17 @@ h1, h2, h3, h4 {
   .hero__scroll,
   .hero__scroll-chevron {
     animation: none;
+  }
+
+  .hero__name {
+    animation: none;
+    background-position: 0% 0;   /* rest state = plain text color */
+  }
+
+  .project-card.tilt,
+  .project-card.tilt:not(:hover) {
+    transition: none;
+    transform: none !important;
   }
 
   .glow-card::after { transition: none; }
