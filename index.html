@@ -96,7 +96,7 @@
         <div class="hero__content">
           <!-- Featured pill — scrolls to FlakeHound section -->
           <a href="#flakehound" class="hero__featured-pill">
-            ⭐ Featured: FlakeHound →
+            ⭐ Featured: FlakeHound 🐕 →
           </a>
 
           <h1 class="hero__name" id="hero-name">Maya Erusalimsky</h1>
@@ -443,7 +443,8 @@
 
         <!-- ── Tech stack ────────────────────────────────────────── -->
         <div class="flagship__tech reveal">
-          <ul class="skill-cloud" aria-label="FlakeHound tech stack" role="list">
+          <p class="skill-hint">Click a skill to see why it earns its place ↓</p>
+          <ul class="skill-cloud" data-inspect="flakehound" aria-label="FlakeHound tech stack" role="list">
             <li class="skill-tag">TypeScript</li>
             <li class="skill-tag">Node.js</li>
             <li class="skill-tag">GitHub Actions</li>
@@ -525,7 +526,7 @@
 
         <div class="projects__grid">
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-href="https://mayageva11.github.io/nexusqa/">
             <a href="https://mayageva11.github.io/nexusqa/"
                class="project-card__media"
                target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
@@ -564,7 +565,7 @@
             </div>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-href="https://mayageva11.github.io/questforge/">
             <a href="https://mayageva11.github.io/questforge/"
                class="project-card__media"
                target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
@@ -602,7 +603,7 @@
             </div>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-href="https://github.com/mayageva11/EduCare">
             <div class="project-card__media project-card__media--gradient project-card__media--educare" aria-hidden="true">
               <span class="project-card__media-glyph">🎓</span>
             </div>
@@ -630,7 +631,7 @@
             </a>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-href="https://github.com/mayageva11/job-dashboard">
             <div class="project-card__media project-card__media--gradient project-card__media--jobs" aria-hidden="true">
               <span class="project-card__media-glyph">📬</span>
             </div>
@@ -890,6 +891,16 @@
   <footer class="footer">
     <div class="container footer__inner">
       <p class="footer__text">
+        <svg class="footer__logo-mark" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <rect x="8" y="8" width="104" height="104" rx="26"
+                fill="#0f1420" stroke="url(#logo-grad)" stroke-width="5"/>
+          <path d="M32 82 V46 L54 70"
+                fill="none" stroke="url(#logo-grad)" stroke-width="11"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M54 70 L66 84 L92 44"
+                fill="none" stroke="#00d4ff" stroke-width="11"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
         Maya Erusalimsky — QA Automation Engineer &middot; Built with HTML, CSS &amp; JS &middot; 2026
       </p>
       <nav class="footer__nav" aria-label="Footer navigation">

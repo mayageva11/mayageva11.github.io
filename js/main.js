@@ -239,7 +239,9 @@ const SKILL_INFO = {
   'MCP':                 { why: 'a standard protocol wiring AI agents to real tools — git, browsers, databases', proof: 'MCP-Git for automated PR creation in my day job' },
   'Groq / Llama':        { why: 'near-instant open-model inference with a generous free tier — great for creative generation', proof: 'QuestForge\'s AI-generated quest scenes (~14,400 free requests/day)' },
   'LLM Integration':     { why: 'pluggable providers, graceful degradation, zero blind trust in model output', proof: 'FlakeHound\'s HypothesisProvider interface — Ollama or Claude behind one contract' },
-  'AI-assisted Testing': { why: 'AI drafts, tests verify — speed without surrendering correctness', proof: 'how I work every day, at Kissterra and in the open' }
+  'AI-assisted Testing': { why: 'AI drafts, tests verify — speed without surrendering correctness', proof: 'how I work every day, at Kissterra and in the open' },
+  'ts-morph':            { why: 'programmatic AST edits that preserve formatting — refactor code the way a careful human would, never with regex', proof: 'FlakeHound\'s quarantine tags tests via surgical ts-morph edits, reviewable in a PR' },
+  'JUnit XML':           { why: 'the one test-result format every runner and CI already emits — integrate everything, write zero plugins', proof: 'FlakeHound\'s only input: Jest, Playwright, pytest, and JUnit all speak it' }
 };
 
 document.querySelectorAll('[data-inspect]').forEach(cloud => {
@@ -301,6 +303,16 @@ document.querySelectorAll('[data-inspect]').forEach(cloud => {
   /* Escape closes the panel */
   panel.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   cloud.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+});
+
+/* ─── Whole-card click-through (project cards) ───────────────
+   Tapping anywhere on a card opens its primary destination.
+   Inner links/buttons keep their own behavior.                  */
+document.querySelectorAll('[data-href]').forEach(card => {
+  card.addEventListener('click', e => {
+    if (e.target.closest('a, button')) return;   /* real links win */
+    window.open(card.dataset.href, '_blank', 'noopener');
+  });
 });
 
 /* ─── Cursor-tracking glow on cards ──────────────────────────── */

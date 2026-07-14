@@ -108,12 +108,31 @@ h1, h2, h3, h4 {
 .text-link:hover { border-color: var(--accent); }
 
 /* ─── Section base ───────────────────────────────────────────── */
-.section { padding: 5rem 0; }
+.section {
+  position: relative;
+  padding: 5rem 0;
+}
+
+/* Gradient hairline at the top of every section — unifies the page
+   (the flagship's stronger violet→cyan bar overrides this one) */
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 5%,
+    rgba(0, 212, 255, 0.22) 35%,
+    rgba(124, 58, 237, 0.22) 65%,
+    transparent 95%);
+}
 
 .section__title {
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   margin-bottom: 2.5rem;
   text-wrap: balance;
 }
@@ -158,7 +177,9 @@ h1, h2, h3, h4 {
 }
 .btn--primary:hover {
   background: #2ddcff;
-  box-shadow: 0 0 22px rgba(0, 212, 255, 0.45);
+  box-shadow:
+    0 0 22px rgba(0, 212, 255, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);   /* subtle top sheen */
   transform: translateY(-1px);
 }
 
@@ -379,8 +400,12 @@ h1, h2, h3, h4 {
 /* Scrollspy — set by main.js as the matching section crosses the viewport */
 .nav__link--active {
   color: var(--accent);
+  background: var(--accent-dim);
 }
-.nav__link--active:hover { color: var(--accent); }
+.nav__link--active:hover {
+  color: var(--accent);
+  background: var(--accent-dim);
+}
 
 /* Hamburger */
 .nav__hamburger {
@@ -1331,6 +1356,8 @@ h1, h2, h3, h4 {
   transform: translateY(-3px);
 }
 
+.project-card[data-href] { cursor: pointer; }
+
 .project-card__body { display: flex; flex-direction: column; gap: 0.75rem; }
 
 .project-card__title {
@@ -1427,8 +1454,17 @@ h1, h2, h3, h4 {
 }
 
 .footer__text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-size: 0.82rem;
   color: var(--muted);
+}
+
+.footer__logo-mark {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .footer__nav {
@@ -1595,6 +1631,7 @@ h1, h2, h3, h4 {
 @media (min-width: 1024px) {
   .section { padding: 6.5rem 0; }
   .section__title { font-size: 2.25rem; }
+  .flagship__title { font-size: 3.25rem; }
   .flagship__problem { padding: 2rem 2.5rem; }
 }
 
