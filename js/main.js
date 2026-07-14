@@ -42,6 +42,9 @@ document.addEventListener('keydown', e => {
 /* ─── Scroll reveal (IntersectionObserver) ───────────────────── */
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* Section titles join the reveal system and get an animated underline */
+document.querySelectorAll('.section__title').forEach(t => t.classList.add('reveal', 'reveal--title'));
+
 if (!prefersReducedMotion) {
   const observer = new IntersectionObserver(
     entries => {

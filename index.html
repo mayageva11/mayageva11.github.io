@@ -117,6 +117,7 @@
           </ul>
 
           <div class="hero__actions">
+            <a href="#flakehound" class="btn btn--flakehound">🐕 FlakeHound</a>
             <a href="#projects" class="btn btn--primary">View Projects</a>
             <a href="https://github.com/mayageva11"
                class="btn btn--ghost"
@@ -480,6 +481,56 @@
           </div>
         </div>
 
+        <!-- ── Module map - the internal architecture ────────────── -->
+        <div class="flagship__modules reveal">
+          <h3 class="flagship__block-title">Inside the codebase</h3>
+          <p class="flagship__modules-intro">
+            Deterministic core, AI only at the edge - shuffled input produces
+            byte-identical reports, and the AI layer can never affect scoring,
+            clustering, or exit codes.
+          </p>
+          <div class="module-grid">
+            <div class="module">
+              <code>ingest/</code>
+              <p>JUnit XML → canonical TestRun[] · 3-step metadata resolution chain</p>
+            </div>
+            <div class="module">
+              <code>signal/</code>
+              <p>transition-frequency scoring · regression classifier - verdicts are mutually exclusive</p>
+            </div>
+            <div class="module module--core">
+              <span class="module__badge">the core</span>
+              <code>cluster/</code>
+              <p>trace normalization → head-weighted similarity → deterministic clustering</p>
+            </div>
+            <div class="module module--edge">
+              <span class="module__badge module__badge--violet">at the edge</span>
+              <code>ai/</code>
+              <p>HypothesisProvider interface · Ollama or Claude · never the source of truth</p>
+            </div>
+            <div class="module">
+              <code>config/</code>
+              <p>flakehound.config.ts via jiti · zod-validated · CLI flags override</p>
+            </div>
+            <div class="module">
+              <code>report/</code>
+              <p>terminal report · JSON artifact · baseline diff powering the CI gate</p>
+            </div>
+            <div class="module">
+              <code>quarantine/</code>
+              <p>ts-morph AST edits · one GitHub issue per test · auto-release</p>
+            </div>
+            <div class="module">
+              <code>run.ts</code>
+              <p>pipeline orchestrator · injectable clock, client, and streams</p>
+            </div>
+            <div class="module">
+              <code>cli.ts</code>
+              <p>commander entry · exit codes: 0 clean · 1 found bugs · 2 tool error</p>
+            </div>
+          </div>
+        </div>
+
         <!-- ── Tech stack ────────────────────────────────────────── -->
         <div class="flagship__tech reveal">
           <p class="skill-hint">Click a skill to see why it earns its place ↓</p>
@@ -619,6 +670,7 @@
                 <div class="arch__node"><strong>Express API</strong><small>Node.js backend</small></div>
                 <div class="arch__edge"><span>AI insights</span></div>
                 <div class="arch__node arch__node--ext"><strong>Claude API</strong><small>external service</small></div>
+                <p class="arch__note">3 user roles · UI and API layers tested independently · Allure trend history</p>
               </div>
             </div>
           </article>
@@ -680,6 +732,7 @@
                 </div>
                 <div class="arch__edge"><span>progress saved</span></div>
                 <div class="arch__node"><strong>localStorage</strong><small>keys never leave the device</small></div>
+                <p class="arch__note">zero npm dependencies · ~14,400 free AI requests/day · fully client-side</p>
               </div>
             </div>
           </article>
@@ -733,6 +786,7 @@
                     <div class="arch__node"><strong>Puppeteer / jsPDF</strong><small>6 Ministry forms</small></div>
                   </div>
                 </div>
+                <p class="arch__note">per-counselor data isolation · rate-limited auth · double-booking protection</p>
               </div>
             </div>
           </article>
@@ -788,6 +842,7 @@
                     <div class="arch__node"><strong>React dashboard</strong><small>one-click apply · history</small></div>
                   </div>
                 </div>
+                <p class="arch__note">weighted skills scoring · 70% match threshold · runs unattended every morning</p>
               </div>
             </div>
           </article>

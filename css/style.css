@@ -223,6 +223,24 @@ h1, h2, h3, h4 {
   font-size: 0.82rem;
 }
 
+/* Hero FlakeHound CTA - slow-flowing violet↔cyan gradient */
+.btn--flakehound {
+  background: linear-gradient(120deg, #7c3aed, #00d4ff, #7c3aed);
+  background-size: 220% 100%;
+  color: #fff;
+  border: none;
+  animation: grad-flow 5s linear infinite;
+}
+
+.btn--flakehound:hover {
+  box-shadow: 0 0 26px rgba(124, 58, 237, 0.5);
+  transform: translateY(-1px);
+}
+
+@keyframes grad-flow {
+  to { background-position: -220% 0; }
+}
+
 /* ─── Chips ──────────────────────────────────────────────────── */
 .chip {
   display: inline-flex;
@@ -1164,6 +1182,118 @@ h1, h2, h3, h4 {
   font-size: 1.1rem;
   font-weight: 600;
   flex-shrink: 0;
+  animation: arrow-pulse 1.8s ease-in-out infinite;
+}
+
+/* Arrows pulse in sequence - data marching down the pipeline */
+.flow__arrow:nth-of-type(1) { animation-delay: 0s; }
+.flow__arrow:nth-of-type(2) { animation-delay: 0.3s; }
+.flow__arrow:nth-of-type(3) { animation-delay: 0.6s; }
+.flow__arrow:nth-of-type(4) { animation-delay: 0.9s; }
+
+@keyframes arrow-pulse {
+  0%, 100% { opacity: 0.4; text-shadow: none; }
+  50%      { opacity: 1;   text-shadow: 0 0 10px rgba(0, 212, 255, 0.8); }
+}
+
+/* ── Module map - FlakeHound internals ─────────────────────── */
+.flagship__modules { margin-bottom: 3rem; }
+
+.flagship__modules-intro {
+  max-width: 640px;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+}
+
+.module-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+@media (min-width: 640px) {
+  .module-grid { grid-template-columns: repeat(3, 1fr); }  /* 9 tiles = 3x3 */
+}
+
+.module {
+  position: relative;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color var(--ease), box-shadow var(--ease), transform var(--ease);
+}
+
+.module:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.module code {
+  display: block;
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+
+.module p {
+  font-size: 0.76rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.module--core {
+  border-color: rgba(0, 212, 255, 0.45);
+  box-shadow: 0 0 24px rgba(0, 212, 255, 0.08);
+}
+
+.module--edge {
+  border-style: dashed;
+  border-color: rgba(124, 58, 237, 0.45);
+}
+.module--edge code { color: #a78bfa; }
+
+.module__badge {
+  position: absolute;
+  top: -9px;
+  right: 10px;
+  padding: 0.1rem 0.55rem;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  border-radius: 999px;
+}
+
+.module__badge--violet {
+  background: var(--violet);
+  color: #fff;
+}
+
+/* Tiles cascade in when the block scrolls into view */
+.reveal.visible .module {
+  animation: tile-in 0.45s ease both;
+}
+.reveal.visible .module:nth-child(1) { animation-delay: 0.00s; }
+.reveal.visible .module:nth-child(2) { animation-delay: 0.06s; }
+.reveal.visible .module:nth-child(3) { animation-delay: 0.12s; }
+.reveal.visible .module:nth-child(4) { animation-delay: 0.18s; }
+.reveal.visible .module:nth-child(5) { animation-delay: 0.24s; }
+.reveal.visible .module:nth-child(6) { animation-delay: 0.30s; }
+.reveal.visible .module:nth-child(7) { animation-delay: 0.36s; }
+.reveal.visible .module:nth-child(8) { animation-delay: 0.42s; }
+.reveal.visible .module:nth-child(9) { animation-delay: 0.48s; }
+
+@keyframes tile-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* ── Tech cloud ────────────────────────────────────────────── */
@@ -1477,6 +1607,32 @@ h1, h2, h3, h4 {
 }
 
 .arch__col .arch__node { flex: 1; }
+
+.arch__note {
+  margin-top: 0.75rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--border);
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.64rem;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.7;
+}
+
+/* Nodes cascade in when a panel opens */
+.project-card__arch--in .arch > * {
+  animation: tile-in 0.35s ease both;
+}
+.project-card__arch--in .arch > *:nth-child(1)  { animation-delay: 0.00s; }
+.project-card__arch--in .arch > *:nth-child(2)  { animation-delay: 0.05s; }
+.project-card__arch--in .arch > *:nth-child(3)  { animation-delay: 0.10s; }
+.project-card__arch--in .arch > *:nth-child(4)  { animation-delay: 0.15s; }
+.project-card__arch--in .arch > *:nth-child(5)  { animation-delay: 0.20s; }
+.project-card__arch--in .arch > *:nth-child(6)  { animation-delay: 0.25s; }
+.project-card__arch--in .arch > *:nth-child(7)  { animation-delay: 0.30s; }
+.project-card__arch--in .arch > *:nth-child(8)  { animation-delay: 0.35s; }
+.project-card__arch--in .arch > *:nth-child(9)  { animation-delay: 0.40s; }
+.project-card__arch--in .arch > *:nth-child(10) { animation-delay: 0.45s; }
 
 /* Cursor-tracking glow — --mx/--my set by main.js on mousemove */
 .glow-card { position: relative; }
@@ -1796,6 +1952,25 @@ h1, h2, h3, h4 {
 .projects__grid .reveal:nth-child(3) { transition-delay: 0.16s; }
 .projects__grid .reveal:nth-child(4) { transition-delay: 0.24s; }
 
+/* Section titles get a gradient underline that draws itself on reveal
+   (the .reveal/.reveal--title classes are added by main.js) */
+.reveal--title { transform: translateY(14px); }
+
+.reveal--title::after {
+  content: '';
+  display: block;
+  margin-top: 0.55rem;
+  width: 52px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--violet));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease 0.25s;
+}
+
+.reveal--title.visible::after { transform: scaleX(1); }
+
 /* ════════════════════════════════════════════════════════════════
    RESPONSIVE
 ════════════════════════════════════════════════════════════════ */
@@ -1959,6 +2134,12 @@ h1, h2, h3, h4 {
   .terminal__body .t-caret { animation: none; }
 
   .skill-inspector--in { animation: none; }
+
+  .btn--flakehound { animation: none; }
+  .flow__arrow { animation: none; opacity: 1; }
+  .reveal.visible .module { animation: none; }
+  .project-card__arch--in .arch > * { animation: none; }
+  .reveal--title::after { transform: scaleX(1); transition: none; }
 
   .arch__edge::after { animation: none; }
   .project-card__arch--in { animation: none; }
