@@ -221,6 +221,141 @@ if (terminalOutput) {
   }
 }
 
+/* ─── FlakeHound cluster chart ─────────────────────────────────
+   "23 failures → 4 bugs" - bars grow and the numbers count up the
+   first time the chart scrolls into view. Reduced motion → the
+   finished state renders instantly, no growth or counting.        */
+function countUp(el, to, ms) {
+  const start = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - start) / ms, 1);
+    const eased = 1 - Math.pow(1 - p, 3);          /* easeOutCubic */
+    el.textContent = Math.round(eased * to);
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = to;
+  })(start);
+}
+
+const clusterChart = document.querySelector('[data-cluster-chart]');
+if (clusterChart) {
+  const nums = clusterChart.querySelectorAll('[data-count-to]');
+
+  const settle = () => {
+    clusterChart.classList.add('cluster-chart--in');
+    nums.forEach(n => { n.textContent = n.dataset.countTo; });
+  };
+
+  if (prefersReducedMotion) {
+    settle();
+  } else {
+    const chartObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        chartObserver.unobserve(entry.target);
+        clusterChart.classList.add('cluster-chart--in');   /* CSS grows the bars */
+        nums.forEach(n => countUp(n, Number(n.dataset.countTo), 1100));
+      });
+    }, { threshold: 0.35 });
+    chartObserver.observe(clusterChart);
+  }
+}
+
+/* ─── FlakeHound AI hypothesis demo ────────────────────────────
+   A cluster's stack trace is "analyzed" by the AI layer: a spinner
+   runs, then a one-line root-cause hypothesis types out. Reduced
+   motion → the finished hypothesis renders instantly.              */
+const AI_HYP_PLAIN =
+  'Likely a race condition — #pay-button is enabled only after the async cart ' +
+  'total resolves, so the click can land before the button is interactive. ' +
+  'Wait on the enabled state.';
+const AI_HYP_HTML =
+  'Likely a <strong>race condition</strong> — #pay-button is enabled only after ' +
+  'the async cart total resolves, so the click can land before the button is ' +
+  'interactive. Wait on the enabled state.';
+const AI_CURSOR = '<span class="ai-demo__cursor"></span>';
+const AI_ANALYZING = ' analyzing 7 failures in this cluster…';
+
+const aiDemo = document.querySelector('[data-ai-demo]');
+if (aiDemo) {
+  const status  = aiDemo.querySelector('[data-ai-status]');
+  const card    = aiDemo.querySelector('[data-ai-card]');
+  const text    = aiDemo.querySelector('[data-ai-text]');
+  const replay  = aiDemo.querySelector('[data-ai-replay]');
+
+  const settleAi = () => {
+    status.className = 'ai-demo__status ai-demo__status--done';
+    status.textContent = '✓ hypothesis ready — a hint, not a verdict';
+    card.hidden = false;
+    text.innerHTML = AI_HYP_HTML;
+  };
+
+  function runAiDemo(onDone) {
+    let cancelled = false;
+    const timers = [];
+    const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+
+    /* reset */
+    status.className = 'ai-demo__status';
+    status.innerHTML = '';
+    card.hidden = true;
+    card.classList.remove('ai-demo__card--in');
+    text.innerHTML = '';
+
+    let frame = 0;
+    const SPIN_TOTAL = 22;
+    (function spin() {
+      if (cancelled) return;
+      const f = TERM_SPINNER_FRAMES[frame % TERM_SPINNER_FRAMES.length];
+      status.innerHTML = `<span class="ai-demo__spin">${f}</span>${AI_ANALYZING}`;
+      if (frame++ < SPIN_TOTAL) later(spin, 70);
+      else reveal();
+    })();
+
+    function reveal() {
+      if (cancelled) return;
+      status.className = 'ai-demo__status ai-demo__status--done';
+      status.textContent = '✓ hypothesis ready — a hint, not a verdict';
+      card.hidden = false;
+      card.classList.add('ai-demo__card--in');
+      later(type, 320);
+    }
+
+    function type() {
+      let i = 0;
+      (function tick() {
+        if (cancelled) return;
+        text.innerHTML = escapeHtml(AI_HYP_PLAIN.slice(0, i)) + AI_CURSOR;
+        if (i++ < AI_HYP_PLAIN.length) later(tick, 16 + Math.random() * 26);
+        else { text.innerHTML = AI_HYP_HTML; onDone(); }
+      })();
+    }
+
+    return () => { cancelled = true; timers.forEach(clearTimeout); };
+  }
+
+  if (prefersReducedMotion) {
+    settleAi();
+  } else {
+    let cancelAi = null;
+    const startAi = () => {
+      if (cancelAi) cancelAi();
+      replay.hidden = true;
+      cancelAi = runAiDemo(() => { replay.hidden = false; });
+    };
+
+    const aiObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        aiObserver.unobserve(entry.target);
+        startAi();
+      });
+    }, { threshold: 0.4 });
+    aiObserver.observe(aiDemo);
+
+    replay.addEventListener('click', startAi);
+  }
+}
+
 /* ─── Skill inspector ─────────────────────────────────────────
    Click a skill chip → a terminal-style panel "runs"
    > inspect('Skill') and prints WHY it's good + PROOF I've used it. */
@@ -237,7 +372,7 @@ const SKILL_INFO = {
   'MongoDB':             { why: 'flexible documents fit evolving product data without migration pain', proof: 'EduCare\'s student cases, activities, and timetables via Mongoose' },
   'Python':              { why: 'the fastest path from idea to working script - and the pytest ecosystem is superb', proof: 'production-quality Python alongside TypeScript at Kissterra' },
   'Express':             { why: 'a minimal, explicit HTTP layer - you see exactly what every route does', proof: 'NexusQA\'s backend API' },
-  'Vitest':              { why: 'fast, ESM-native unit testing with a Jest-compatible API - instant feedback loops', proof: '221 unit tests guarding FlakeHound\'s deterministic core' },
+  'Vitest':              { why: 'fast, ESM-native unit testing with a Jest-compatible API - instant feedback loops', proof: '227 unit tests guarding FlakeHound\'s deterministic core' },
   'Jest':                { why: 'batteries-included testing - mocks, snapshots, and coverage out of the box', proof: 'EduCare\'s suite with React Testing Library' },
   'Allure':              { why: 'test reports stakeholders can actually read - history, trends, and failure triage', proof: 'NexusQA\'s reporting pipeline' },
   'Claude Code':         { why: 'an agent that edits, runs, and verifies inside your repo - not autocomplete, a colleague', proof: 'this entire site: planned, built, tested, and deployed with it - every change human-reviewed' },
