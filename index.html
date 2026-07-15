@@ -318,7 +318,7 @@
           <!--
             BADGES - real shields.io SVGs.
             Replace NPM_VERSION with the actual version number from package.json.
-            Replace TESTS_COUNT with the passing test count from CI (e.g. 221).
+            Replace TESTS_COUNT with the passing test count from CI (e.g. 227).
           -->
           <div class="flagship__badges" aria-label="Build badges">
             <img
@@ -331,8 +331,11 @@
               src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white"
               alt="TypeScript strict mode badge">
             <img
-              src="https://img.shields.io/badge/tests-221%20passing-brightgreen"
-              alt="221 tests passing">
+              src="https://img.shields.io/badge/tests-227%20passing-brightgreen"
+              alt="227 tests passing">
+            <img
+              src="https://img.shields.io/badge/release-v0.5.0-7c3aed"
+              alt="release v0.5.0 badge">
           </div>
 
           <div class="flagship__ctas">
@@ -359,24 +362,112 @@
           </div>
         </div>
 
+        <!-- ── What's new in 0.5.0 ───────────────────────────────── -->
+        <div class="flagship__release reveal">
+          <div class="release">
+            <div class="release__head">
+              <span class="release__badge">
+                <span class="release__pulse" aria-hidden="true"></span>
+                Latest · v0.5.0
+              </span>
+              <h3 class="release__title">Concurrency-safe baselines &amp; a robustness pass</h3>
+              <a href="https://github.com/mayageva11/flakehound/releases/tag/v0.5.0"
+                 class="release__link"
+                 target="_blank" rel="noopener noreferrer">Release notes ↗</a>
+            </div>
+            <ul class="release__list" aria-label="What's new in version 0.5.0">
+              <li class="release__item" style="--i:0">
+                <span class="release__icon" aria-hidden="true">💾</span>
+                <div class="release__body">
+                  <p class="release__item-title">cache-baseline action input</p>
+                  <p class="release__item-desc">
+                    The GitHub Action now persists and restores the baseline via
+                    <code>actions/cache</code> — parallel branches, PRs, and matrix
+                    legs never clobber each other's baseline.
+                  </p>
+                </div>
+              </li>
+              <li class="release__item" style="--i:1">
+                <span class="release__icon" aria-hidden="true">⚛️</span>
+                <div class="release__body">
+                  <p class="release__item-title">Atomic writes everywhere</p>
+                  <p class="release__item-desc">
+                    Report, quarantine state, HTML dashboard, and spec-file edits
+                    write via temp-file + rename — a crash or concurrent reader
+                    never sees a torn file.
+                  </p>
+                </div>
+              </li>
+              <li class="release__item" style="--i:2">
+                <span class="release__icon" aria-hidden="true">💬</span>
+                <div class="release__body">
+                  <p class="release__item-title">PR-comment upsert fix</p>
+                  <p class="release__item-desc">
+                    The comment step no longer hard-fails or duplicates itself when
+                    a pull request has paginated comments.
+                  </p>
+                </div>
+              </li>
+              <li class="release__item" style="--i:3">
+                <span class="release__icon" aria-hidden="true">🧹</span>
+                <div class="release__body">
+                  <p class="release__item-title">Orphan issue rollback</p>
+                  <p class="release__item-desc">
+                    If a quarantine edit fails after its tracking issue was filed,
+                    the issue is closed again — a re-run can't duplicate it.
+                  </p>
+                </div>
+              </li>
+              <li class="release__item" style="--i:4">
+                <span class="release__icon" aria-hidden="true">🛡️</span>
+                <div class="release__body">
+                  <p class="release__item-title">The AI layer never crashes the run</p>
+                  <p class="release__item-desc">
+                    A provider-init failure degrades to "no hypotheses", honouring
+                    the documented deterministic-core guarantee.
+                  </p>
+                </div>
+              </li>
+              <li class="release__item" style="--i:5">
+                <span class="release__icon" aria-hidden="true">⬆️</span>
+                <div class="release__body">
+                  <p class="release__item-title">CI actions on node24</p>
+                  <p class="release__item-desc">
+                    <code>checkout</code>/<code>setup-node</code> v7 and
+                    <code>cache</code> v6 — drops the Node 20 deprecation warning.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
         <!-- ── Problem block ─────────────────────────────────────── -->
         <div class="flagship__problem reveal">
           <h3 class="flagship__block-title">The problem it solves</h3>
-          <p class="flagship__problem-text">
-            A flaky test passes and fails on the same code - and every red build it
-            causes trains your team to click "re-run" instead of investigating. Existing
-            tools count pass/fail rates and tell you <em>that</em> a test is flaky;
-            paid services like BuildPulse and Trunk.io charge for exactly that.
-          </p>
-          <p class="flagship__problem-text">
-            FlakeHound is <strong>free, open-source, and goes further</strong>: it
-            normalises stack traces and clusters failures by their underlying cause -
-            turning <em>"23 failures over 3 weeks"</em> into <em>"4 unique bugs"</em>.
-            It knows that a test failing 100% of the time since one commit isn't flaky,
-            it's <strong>broken</strong> - and it gates CI on <em>new</em> regressions
-            only, so the build fails once when a bug lands, not on every run until
-            someone fixes it.
-          </p>
+          <div class="flagship__problem-cols">
+            <div class="flagship__problem-col">
+              <p class="flagship__problem-tag flagship__problem-tag--pain">The pain</p>
+              <p class="flagship__problem-text">
+                A flaky test passes and fails on the same code - and every red build it
+                causes trains your team to click "re-run" instead of investigating. Existing
+                tools count pass/fail rates and tell you <em>that</em> a test is flaky;
+                paid services like BuildPulse and Trunk.io charge for exactly that.
+              </p>
+            </div>
+            <div class="flagship__problem-col">
+              <p class="flagship__problem-tag flagship__problem-tag--fix">The FlakeHound difference</p>
+              <p class="flagship__problem-text">
+                FlakeHound is <strong>free, open-source, and goes further</strong>: it
+                normalises stack traces and clusters failures by their underlying cause -
+                turning <em>"23 failures over 3 weeks"</em> into <em>"4 unique bugs"</em>.
+                It knows that a test failing 100% of the time since one commit isn't flaky,
+                it's <strong>broken</strong> - and it gates CI on <em>new</em> regressions
+                only, so the build fails once when a bug lands, not on every run until
+                someone fixes it.
+              </p>
+            </div>
+          </div>
         </div>
 
         <!-- ── Terminal demo - real `flakehound analyze` output ──── -->
@@ -394,6 +485,79 @@
               </button>
             </div>
             <pre class="terminal__body" id="terminal-output" aria-hidden="true"><code></code></pre>
+          </div>
+        </div>
+
+        <!-- ── Interactive chart - 23 failures → 4 root-cause bugs ── -->
+        <div class="flagship__chart reveal">
+          <h3 class="flagship__block-title">From noise to signal</h3>
+          <p class="flagship__problem-text">
+            Three weeks of the Flaky Shop's CI produced <strong>23 red failures</strong>.
+            FlakeHound normalises the stack traces and clusters them by root cause —
+            and the wall of red collapses into just <strong>4 real bugs</strong>.
+            Hover a bar to read its signature.
+          </p>
+
+          <div class="cluster-chart" data-cluster-chart>
+            <div class="cluster-chart__headline" aria-hidden="true">
+              <span class="cluster-chart__num cluster-chart__num--from" data-count-to="23">0</span>
+              <span class="cluster-chart__cap">failures</span>
+              <span class="cluster-chart__arrow">→</span>
+              <span class="cluster-chart__num cluster-chart__num--to" data-count-to="4">0</span>
+              <span class="cluster-chart__cap">root&#8209;cause bugs</span>
+            </div>
+
+            <ul class="cluster-chart__bars"
+                aria-label="23 failures clustered into 4 root-cause bugs, ranked by occurrences">
+              <li class="cbar" style="--v:9; --max:9;">
+                <div class="cbar__meta">
+                  <code class="cbar__id">7a7c1180</code>
+                  <span class="cbar__label">AssertionError · cart total ≠ charged amount</span>
+                </div>
+                <div class="cbar__track">
+                  <div class="cbar__fill cbar__fill--a">
+                    <span class="cbar__count" data-count-to="9">0</span>× across 2 tests
+                  </div>
+                </div>
+              </li>
+              <li class="cbar" style="--v:7; --max:9;">
+                <div class="cbar__meta">
+                  <code class="cbar__id">a8a64e2d</code>
+                  <span class="cbar__label">TimeoutError · waiting for locator('#pay-button')</span>
+                </div>
+                <div class="cbar__track">
+                  <div class="cbar__fill cbar__fill--b">
+                    <span class="cbar__count" data-count-to="7">0</span>× across 1 test
+                  </div>
+                </div>
+              </li>
+              <li class="cbar" style="--v:4; --max:9;">
+                <div class="cbar__meta">
+                  <code class="cbar__id">c1f30b9a</code>
+                  <span class="cbar__label">NetworkError · 502 from /api/checkout</span>
+                </div>
+                <div class="cbar__track">
+                  <div class="cbar__fill cbar__fill--c">
+                    <span class="cbar__count" data-count-to="4">0</span>× across 3 tests
+                  </div>
+                </div>
+              </li>
+              <li class="cbar" style="--v:3; --max:9;">
+                <div class="cbar__meta">
+                  <code class="cbar__id">e07d5521</code>
+                  <span class="cbar__label">ElementNotFound · receipt total missing</span>
+                </div>
+                <div class="cbar__track">
+                  <div class="cbar__fill cbar__fill--d">
+                    <span class="cbar__count" data-count-to="3">0</span>× across 1 test
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <p class="cluster-chart__foot">
+              Ranked by impact — fix <strong>4 bugs</strong>, not chase 23 failures.
+            </p>
           </div>
         </div>
 
@@ -479,6 +643,55 @@
               <span class="flow__sub">exit 1 only on NEW bugs</span>
             </div>
           </div>
+        </div>
+
+        <!-- ── AI hypothesis layer - animated live demo ──────────── -->
+        <div class="flagship__ai reveal">
+          <h3 class="flagship__block-title">The AI layer, in action</h3>
+          <p class="flagship__problem-text flagship__ai-intro">
+            Optional and at the edge. A local <strong>Ollama</strong> model runs first
+            (private, zero cost), the <strong>Claude API</strong> is the fallback — and
+            since v0.5.0 a provider that can't start just degrades to
+            <em>"no hypotheses"</em>. The deterministic core never changes.
+          </p>
+
+          <div class="ai-demo" data-ai-demo>
+            <div class="ai-demo__bar">
+              <span class="ai-demo__provider">
+                <span class="ai-demo__dot" aria-hidden="true"></span>
+                ollama · llama3
+              </span>
+              <span class="ai-demo__meta" aria-hidden="true">HypothesisProvider · optional</span>
+              <button class="ai-demo__replay" data-ai-replay type="button"
+                      aria-label="Replay the AI hypothesis animation" hidden>
+                ↻ Replay
+              </button>
+            </div>
+
+            <div class="ai-demo__body">
+              <div class="ai-demo__trace">
+                <span class="ai-demo__cluster">cluster a8a64e2d · 7 failures</span>
+                <code>TimeoutError: Timeout 30000ms exceeded
+    waiting for locator('#pay-button')
+    at CheckoutPage.pay (checkout-page.ts)</code>
+              </div>
+
+              <div class="ai-demo__status" data-ai-status aria-hidden="true"></div>
+
+              <div class="ai-demo__card" data-ai-card hidden>
+                <span class="ai-demo__bulb" aria-hidden="true">💡</span>
+                <div class="ai-demo__hyp">
+                  <span class="ai-demo__hyp-label">root-cause hypothesis</span>
+                  <p class="ai-demo__hyp-text" data-ai-text></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="ai-demo__foot">
+            A hypothesis is a <strong>hint, never a verdict</strong> — scoring,
+            clustering, and the CI gate are computed without it.
+          </p>
         </div>
 
         <!-- ── Module map - the internal architecture ────────────── -->
@@ -861,6 +1074,63 @@
           AI isn't a buzzword on this page - it's a working layer in my products
           and my daily engineering. Pragmatically, with fallbacks, never as a gimmick.
         </p>
+
+        <!-- ── The agentic loop - animated centrepiece ─────────────── -->
+        <div class="ai-loop reveal" role="img"
+             aria-label="How I work with AI: a continuous loop of Generate, Run, Observe, and Refine. The model drafts, tests and CI run it, screenshots and results are observed, and the feedback refines the next iteration — verification closes the loop.">
+          <div class="ai-loop__stage">
+            <svg class="ai-loop__ring" viewBox="0 0 320 320" aria-hidden="true">
+              <defs>
+                <linearGradient id="aiLoopGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#00d4ff"/>
+                  <stop offset="1" stop-color="#7c3aed"/>
+                </linearGradient>
+              </defs>
+              <circle class="ai-loop__track" cx="160" cy="160" r="128"/>
+              <circle class="ai-loop__progress" cx="160" cy="160" r="128"/>
+            </svg>
+
+            <div class="ai-loop__orbit" aria-hidden="true">
+              <span class="ai-loop__comet"></span>
+            </div>
+
+            <div class="ai-loop__core" aria-hidden="true">
+              <span class="ai-loop__core-icon">✅</span>
+              <span class="ai-loop__core-title">Verify</span>
+              <span class="ai-loop__core-sub">closes the loop</span>
+            </div>
+
+            <div class="ai-loop__node ai-loop__node--n" style="--i:0" aria-hidden="true">
+              <div class="ai-loop__node-inner">
+                <span class="ai-loop__badge">🧠</span>
+                <span class="ai-loop__node-label">Generate</span>
+              </div>
+            </div>
+            <div class="ai-loop__node ai-loop__node--e" style="--i:1" aria-hidden="true">
+              <div class="ai-loop__node-inner">
+                <span class="ai-loop__badge">▶️</span>
+                <span class="ai-loop__node-label">Run</span>
+              </div>
+            </div>
+            <div class="ai-loop__node ai-loop__node--s" style="--i:2" aria-hidden="true">
+              <div class="ai-loop__node-inner">
+                <span class="ai-loop__badge">👁️</span>
+                <span class="ai-loop__node-label">Observe</span>
+              </div>
+            </div>
+            <div class="ai-loop__node ai-loop__node--w" style="--i:3" aria-hidden="true">
+              <div class="ai-loop__node-inner">
+                <span class="ai-loop__badge">🔧</span>
+                <span class="ai-loop__node-label">Refine</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="ai-loop__caption">
+            <strong>generate → run → observe → refine</strong> — I run AI in tight
+            loops and let verification, not vibes, decide what ships.
+          </p>
+        </div>
 
         <p class="skill-hint reveal">Click a skill to see why it earns its place ↓</p>
         <ul class="skill-cloud ai__skills reveal" data-inspect="ai" aria-label="AI skills" role="list">
