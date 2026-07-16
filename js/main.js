@@ -76,34 +76,56 @@ if (!prefersReducedMotion) {
 
 const TERM_SPINNER_FRAMES = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 
-/* Step types:
-   comment - dim line printed instantly (context, not typed)
-   cmd     - typed character by character after a "$ " prompt
-   spin    - transient spinner line; disappears when the step ends
-   line    - printed line (pause = extra ms before it appears)     */
-const TERM_SCRIPT = [
-  { type: 'comment', text: '# CI test run just finished - the runner saved its results as JUnit XML' },
-  { type: 'cmd',     text: 'npx flakehound analyze --input "test-results/**/*.xml"' },
-  { type: 'spin',    text: ' reading JUnit XML run history…', frames: 14 },
-  { type: 'line',    text: '✓ ingested 4 XML files - a history of 12 runs of the test suite', cls: 't-green' },
-  { type: 'line',    text: '' },
-  { type: 'spin',    text: ' scoring flakiness · isolating regressions · clustering failures by root cause…', frames: 18 },
-  { type: 'line',    text: 'Regressions (1) - broken code, not flaky', cls: 't-red' },
-  { type: 'line',    text: '  ✗ shop.spec.ts > payment - failing in 100% of runs since commit bbb2222', cls: 't-red' },
-  { type: 'line',    text: '      passed before that commit → this is a hard regression, someone broke it', cls: 't-dim' },
-  { type: 'line',    text: '' },
-  { type: 'line',    text: 'Flaky tests (1) - quarantine candidates', cls: 't-yellow', pause: 300 },
-  { type: 'line',    text: '  ~ shop.spec.ts > checkout - passed AND failed on the same commit', cls: 't-yellow' },
-  { type: 'line',    text: '      same code, different result → genuinely flaky, not a regression', cls: 't-dim' },
-  { type: 'line',    text: '' },
-  { type: 'line',    text: 'Failure clusters - 5 failures share just 2 root causes', cls: 't-cyan', pause: 300 },
-  { type: 'line',    text: '  1. [7a7c1180] ×3  AssertionError: cart total ≠ charged amount' },
-  { type: 'line',    text: '  2. [a8a64e2d] ×2  TimeoutError: waiting for locator(\'#pay-button\')' },
-  { type: 'line',    text: '      → fix 2 bugs, not 5 failures', cls: 't-dim' },
-  { type: 'line',    text: '' },
-  { type: 'line',    text: 'CI gate: 1 NEW regression → exit 1 (build fails once, when the bug lands)', cls: 't-red', pause: 380 },
-  { type: 'line',    text: '         known regressions & flaky tests never re-fail the build', cls: 't-dim' }
-];
+const TERM_SCRIPTS = {
+  analyze: [
+    { type: 'comment', text: '# CI test run just finished - the runner saved its results as JUnit XML' },
+    { type: 'cmd',     text: 'npx flakehound analyze --input "test-results/**/*.xml"' },
+    { type: 'spin',    text: ' reading JUnit XML run history…', frames: 14 },
+    { type: 'line',    text: '✓ ingested 4 XML files - a history of 12 runs of the test suite', cls: 't-green' },
+    { type: 'line',    text: '' },
+    { type: 'spin',    text: ' scoring flakiness · isolating regressions · clustering failures by root cause…', frames: 18 },
+    { type: 'line',    text: 'Regressions (1) - broken code, not flaky', cls: 't-red' },
+    { type: 'line',    text: '  ✗ shop.spec.ts > payment - failing in 100% of runs since commit bbb2222', cls: 't-red' },
+    { type: 'line',    text: '      passed before that commit → this is a hard regression, someone broke it', cls: 't-dim' },
+    { type: 'line',    text: '' },
+    { type: 'line',    text: 'Flaky tests (1) - quarantine candidates', cls: 't-yellow', pause: 300 },
+    { type: 'line',    text: '  ~ shop.spec.ts > checkout - passed AND failed on the same commit', cls: 't-yellow' },
+    { type: 'line',    text: '      same code, different result → genuinely flaky, not a regression', cls: 't-dim' },
+    { type: 'line',    text: '' },
+    { type: 'line',    text: 'Failure clusters - 5 failures share just 2 root causes', cls: 't-cyan', pause: 300 },
+    { type: 'line',    text: '  1. [7a7c1180] ×3  AssertionError: cart total ≠ charged amount' },
+    { type: 'line',    text: '  2. [a8a64e2d] ×2  TimeoutError: waiting for locator(\'#pay-button\')' },
+    { type: 'line',    text: '      → fix 2 bugs, not 5 failures', cls: 't-dim' },
+    { type: 'line',    text: '' },
+    { type: 'line',    text: 'CI gate: 1 NEW regression → exit 1 (build fails once, when the bug lands)', cls: 't-red', pause: 380 },
+    { type: 'line',    text: '         known regressions & flaky tests never re-fail the build', cls: 't-dim' }
+  ],
+  quarantine: [
+    { type: 'comment', text: '# Programmatically isolate flaky tests by auto-editing test specs via ts-morph' },
+    { type: 'cmd',     text: 'npx flakehound quarantine --consecutive-runs 5 --issue-labels "quarantined"' },
+    { type: 'spin',    text: ' checking flakiness signals and current active quarantines…', frames: 12 },
+    { type: 'line',    text: '✓ identified 1 flaky test candidate: shop.spec.ts > checkout', cls: 't-yellow' },
+    { type: 'spin',    text: ' editing test file AST to add quarantine tags…', frames: 15 },
+    { type: 'line',    text: '✓ AST updated: wrapped shop.spec.ts > checkout in a skip tag if quarantined', cls: 't-green' },
+    { type: 'spin',    text: ' filing tracking issue in github repository…', frames: 14 },
+    { type: 'line',    text: '✓ GitHub Issue #432 opened: "Quarantined: shop.spec.ts > checkout"', cls: 't-cyan' },
+    { type: 'line',    text: '  → progress: 0/5 clean runs towards auto-release', cls: 't-dim' },
+    { type: 'line',    text: '' },
+    { type: 'line',    text: 'Summary: 1 test quarantined. AST edits written. Ready to commit.', cls: 't-green' }
+  ],
+  gate: [
+    { type: 'comment', text: '# Verify test runs in CI; fail ONLY on new regressions, bypass known flakes' },
+    { type: 'cmd',     text: 'npx flakehound gate --baseline "flakehound/baseline.json"' },
+    { type: 'spin',    text: ' comparing current failures against baseline.json…', frames: 15 },
+    { type: 'line',    text: 'Current failures: 5' },
+    { type: 'line',    text: '  • AssertionError: cart total ≠ charged amount (Known bug [7a7c1180] - ignored)', cls: 't-dim' },
+    { type: 'line',    text: '  • TimeoutError: waiting for locator(\'#pay-button\') (Known bug [a8a64e2d] - ignored)', cls: 't-dim' },
+    { type: 'line',    text: '  • AssertionError: expect(title).toBe("Shop") (New Regression! - FAIL)', cls: 't-red' },
+    { type: 'line',    text: '' },
+    { type: 'line',    text: 'Verdict: 1 NEW regression detected.', cls: 't-red' },
+    { type: 'line',    text: '  → Exit code 1 (failing build due to new regression)', cls: 't-red', pause: 200 }
+  ]
+};
 
 const CARET = '<span class="t-caret"></span>';
 
@@ -118,28 +140,30 @@ function termStepHtml(step) {
   return step.cls ? `<span class="${step.cls}">${safe}</span>` : safe;
 }
 
-function renderTerminalInstant(code) {
-  code.innerHTML = TERM_SCRIPT
+function renderTerminalInstant(code, cmdKey = 'analyze') {
+  const script = TERM_SCRIPTS[cmdKey] || TERM_SCRIPTS.analyze;
+  code.innerHTML = script
     .filter(s => s.type !== 'spin')
     .map(termStepHtml)
     .join('\n');
 }
 
-function runTerminal(code, onDone) {
+function runTerminal(code, cmdKey = 'analyze', onDone) {
   let cancelled = false;
   let doneHtml = '';
 
   const timers = [];
   const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+  const script = TERM_SCRIPTS[cmdKey] || TERM_SCRIPTS.analyze;
 
   function step(i) {
     if (cancelled) return;
-    if (i >= TERM_SCRIPT.length) {
+    if (i >= script.length) {
       code.innerHTML = doneHtml;   /* drop the caret */
       onDone();
       return;
     }
-    const s = TERM_SCRIPT[i];
+    const s = script[i];
 
     if (s.type === 'comment') {
       doneHtml += termStepHtml(s) + '\n';
@@ -154,7 +178,7 @@ function runTerminal(code, onDone) {
         code.innerHTML = doneHtml +
           `<span class="t-green">$</span> <span class="t-cyan">${typed}</span>${CARET}`;
         if (c < s.text.length) {
-          later(() => typeCmd(c + 1), 22 + Math.random() * 40);
+          later(() => typeCmd(c + 1), 20 + Math.random() * 30);
         } else {
           doneHtml += termStepHtml(s) + '\n';
           later(() => step(i + 1), 340);
@@ -192,32 +216,46 @@ function runTerminal(code, onDone) {
 
 const terminalOutput = document.getElementById('terminal-output');
 const terminalReplay = document.getElementById('terminal-replay');
+const termCmdButtons = document.querySelectorAll('.term-btn');
 
 if (terminalOutput) {
   const code = terminalOutput.querySelector('code');
+  let currentCmd = 'analyze';
 
   if (prefersReducedMotion) {
-    renderTerminalInstant(code);
+    renderTerminalInstant(code, currentCmd);
   } else {
     let cancelRun = null;
 
-    const start = () => {
+    const start = (cmdKey = 'analyze') => {
       if (cancelRun) cancelRun();
       terminalReplay.hidden = true;
-      cancelRun = runTerminal(code, () => { terminalReplay.hidden = false; });
+      cancelRun = runTerminal(code, cmdKey, () => { terminalReplay.hidden = false; });
     };
 
     const termObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           termObserver.unobserve(entry.target);
-          start();
+          start(currentCmd);
         }
       });
     }, { threshold: 0.35 });
     termObserver.observe(terminalOutput);
 
-    terminalReplay.addEventListener('click', start);
+    terminalReplay.addEventListener('click', () => start(currentCmd));
+
+    if (termCmdButtons.length > 0) {
+      termCmdButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (btn.classList.contains('term-btn--active')) return;
+          termCmdButtons.forEach(b => b.classList.remove('term-btn--active'));
+          btn.classList.add('term-btn--active');
+          currentCmd = btn.dataset.cmd;
+          start(currentCmd);
+        });
+      });
+    }
   }
 }
 
@@ -587,3 +625,281 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   });
 });
+
+/* ─── Projects Filter ────────────────────────────────────────── */
+const filterButtons = document.querySelectorAll('.projects__filter-btn');
+const projectCards  = document.querySelectorAll('.project-card');
+
+if (filterButtons.length > 0 && projectCards.length > 0) {
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+
+      // Toggle active classes
+      filterButtons.forEach(b => b.classList.remove('projects__filter-btn--active'));
+      btn.classList.add('projects__filter-btn--active');
+
+      projectCards.forEach(card => {
+        // Close any open architectures to keep things clean
+        const archToggle = card.querySelector('.arch-toggle');
+        const archPanel = card.querySelector('.project-card__arch');
+        if (archToggle && archToggle.getAttribute('aria-expanded') === 'true') {
+          archToggle.setAttribute('aria-expanded', 'false');
+          archToggle.textContent = 'Architecture ⌄';
+          if (archPanel) archPanel.hidden = true;
+        }
+
+        const tagsStr = card.dataset.tags || '';
+        const tags = tagsStr.split(' ');
+        
+        if (filter === 'all' || tags.includes(filter)) {
+          card.classList.remove('project-card--hidden');
+          card.classList.remove('project-card--visible');
+          // Force layout reflow to restart animation
+          void card.offsetWidth;
+          card.classList.add('project-card--visible');
+        } else {
+          card.classList.add('project-card--hidden');
+          card.classList.remove('project-card--visible');
+        }
+      });
+
+      // Reset grid architecture state to closed since we closed them all
+      const grid = document.querySelector('.projects__grid');
+      if (grid) {
+        grid.classList.remove('projects__grid--arch-open');
+      }
+    });
+  });
+}
+
+/* ─── Sandbox Dashboard Logic ────────────────────────────────── */
+(function() {
+  const switchBtns = document.querySelectorAll('.sandbox-switch-btn');
+  const panels     = document.querySelectorAll('.sandbox-panel');
+  const browserUrl = document.getElementById('browser-url');
+  const demoCaption = document.getElementById('demo-caption');
+
+  if (switchBtns.length === 0) return;
+
+  // 1. Switcher between Image Screenshot and Interactive Sandbox
+  switchBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+
+      // Toggle switch button active class
+      switchBtns.forEach(b => {
+        b.classList.remove('sandbox-switch-btn--active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('sandbox-switch-btn--active');
+      btn.setAttribute('aria-selected', 'true');
+
+      // Toggle panel visibility
+      panels.forEach(p => {
+        if (p.id === `panel-${mode}`) {
+          p.removeAttribute('hidden');
+        } else {
+          p.setAttribute('hidden', '');
+        }
+      });
+
+      // Update URL and caption contextual information
+      if (mode === 'sandbox') {
+        if (browserUrl) browserUrl.textContent = 'mayageva11.github.io/flakehound/sandbox';
+        if (demoCaption) demoCaption.innerHTML = '🕹️ Simulated interactive dashboard — click options on the left to test!';
+      } else {
+        if (browserUrl) browserUrl.textContent = 'mayageva11.github.io/flakehound';
+        if (demoCaption) demoCaption.innerHTML = 'One self-contained HTML file - click to open the live dashboard ↗';
+      }
+    });
+  });
+
+  // 2. Sandbox Sidebar View Switching
+  const navBtns = document.querySelectorAll('.sandbox-nav-btn');
+  const views   = document.querySelectorAll('.sandbox-view');
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const viewId = btn.dataset.view;
+
+      navBtns.forEach(b => b.classList.remove('sandbox-nav-btn--active'));
+      btn.classList.add('sandbox-nav-btn--active');
+
+      views.forEach(v => {
+        if (v.id === `view-${viewId}`) {
+          v.removeAttribute('hidden');
+        } else {
+          v.setAttribute('hidden', '');
+        }
+      });
+    });
+  });
+
+  // 3. Accordion expanding logic
+  const accTriggers = document.querySelectorAll('.s-acc-trigger');
+  accTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const parent = trigger.closest('.s-acc-item');
+      const contentId = trigger.getAttribute('aria-controls');
+      const content = document.getElementById(contentId);
+      const isOpen = parent.classList.contains('s-acc-item--open');
+
+      // Close all other accordion items for clean accordion behavior
+      document.querySelectorAll('.s-acc-item').forEach(item => {
+        item.classList.remove('s-acc-item--open');
+        const trig = item.querySelector('.s-acc-trigger');
+        if (trig) {
+          trig.setAttribute('aria-expanded', 'false');
+          const panel = document.getElementById(trig.getAttribute('aria-controls'));
+          if (panel) panel.setAttribute('hidden', '');
+        }
+      });
+
+      // Toggle this item
+      if (!isOpen) {
+        parent.classList.add('s-acc-item--open');
+        trigger.setAttribute('aria-expanded', 'true');
+        if (content) content.removeAttribute('hidden');
+      }
+    });
+  });
+
+  // 4. AI Hypothesis Generator Logic
+  const aiHypotheses = {
+    price: "Likely a rounding bug or coupon application mismatch. The checkout cart payload computed the sum correctly, but the charge request did not apply the 10% discount state. Verify coupon handler.",
+    payment: "Playwright click command fired before locator('#pay-button') became interactive. Payment processing loader was rendering and overlaying the button. Add an explicit wait for button enablement.",
+    network: "Gateway 502 returned from POST /api/checkout. Occurs during high matrix test concurrency due to connection pool starvation in mock DB. Mitigate by limiting parallel worker pool in playwright.config.",
+    receipt: "Receipt page layout shift hides the receipt-total. The verification assertion triggered before the receipt rendering animation finished. Add a waitForSelector or assert on transitionend."
+  };
+
+  const aiGenButtons = document.querySelectorAll('.s-ai-gen-btn');
+  aiGenButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cluster = btn.dataset.cluster;
+      const box = btn.closest('.s-ai-box');
+      const result = box.querySelector('.s-ai-result');
+      const spinner = box.querySelector('.s-ai-spinner');
+      const textEl = box.querySelector('.s-ai-text');
+
+      btn.disabled = true;
+      btn.textContent = 'Generating...';
+      result.removeAttribute('hidden');
+      spinner.removeAttribute('hidden');
+      textEl.textContent = '';
+
+      // Simulate API lag
+      setTimeout(() => {
+        spinner.setAttribute('hidden', '');
+        const hypothesisText = aiHypotheses[cluster] || 'No hypothesis found.';
+        
+        // Typewriter animation
+        let i = 0;
+        btn.textContent = 'Hypothesis Ready';
+        
+        function tick() {
+          textEl.textContent = hypothesisText.slice(0, i) + '█';
+          if (i++ < hypothesisText.length) {
+            setTimeout(tick, 10 + Math.random() * 15);
+          } else {
+            textEl.textContent = hypothesisText;
+          }
+        }
+        tick();
+
+      }, 1000);
+    });
+  });
+
+  // 5. Quarantine Board Toggle Logic
+  const qBtn = document.getElementById('btn-quarantine-checkout');
+  if (qBtn) {
+    let isQuar = false;
+    qBtn.addEventListener('click', () => {
+      const item = qBtn.closest('.sandbox-q-item');
+      const badge = item.querySelector('.badge');
+      const desc = item.querySelector('.sandbox-q-desc');
+
+      qBtn.disabled = true;
+
+      if (!isQuar) {
+        qBtn.textContent = '📦 Writing AST...';
+        setTimeout(() => {
+          qBtn.textContent = '🚀 Opening GitHub Issue...';
+          setTimeout(() => {
+            qBtn.disabled = false;
+            qBtn.textContent = 'Release from Quarantine';
+            qBtn.className = 'btn btn--outline s-q-btn';
+            
+            badge.textContent = 'QUARANTINED';
+            badge.className = 'badge badge--purple';
+            desc.innerHTML = 'Test is quarantined in <code>shop.spec.ts</code>. GitHub Issue #432 opened. Progress: <strong>0/5 clean runs</strong> to auto-release.';
+            isQuar = true;
+          }, 600);
+        }, 600);
+      } else {
+        qBtn.textContent = '📦 Rewriting AST...';
+        setTimeout(() => {
+          qBtn.disabled = false;
+          qBtn.textContent = 'Quarantine Test';
+          qBtn.className = 'btn btn--primary s-q-btn';
+          
+          badge.textContent = 'FLAKY';
+          badge.className = 'badge badge--yellow';
+          desc.textContent = 'Passed and failed on identical commit hashes. Candidate for AST quarantine.';
+          isQuar = false;
+        }, 800);
+      }
+    });
+  }
+
+  // 6. Config Playground Logic
+  const cfgAi = document.getElementById('cfg-ai');
+  const cfgQuarantine = document.getElementById('cfg-quarantine');
+  const cfgGate = document.getElementById('cfg-gate');
+  const cfgThreshold = document.getElementById('cfg-threshold');
+  const cfgThresholdVal = document.getElementById('cfg-threshold-val');
+  const codeBlock = document.getElementById('config-code-block');
+
+  function updateConfigCode() {
+    if (!codeBlock) return;
+
+    const aiVal = cfgAi ? cfgAi.checked : true;
+    const quarVal = cfgQuarantine ? cfgQuarantine.checked : true;
+    const gateVal = cfgGate ? cfgGate.checked : true;
+    const threshVal = cfgThreshold ? Number(cfgThreshold.value).toFixed(2) : '0.80';
+
+    if (cfgThresholdVal) cfgThresholdVal.textContent = threshVal;
+
+    const code = `import { defineConfig } from 'flakehound';
+
+export default defineConfig({
+  input: 'test-results/**/*.xml',
+  similarityThreshold: ${threshVal},
+  ai: {
+    enabled: ${aiVal},
+    provider: 'ollama', // fallback: 'claude'
+  },
+  quarantine: {
+    enabled: ${quarVal},
+    consecutiveRunsToRelease: 5,
+  },
+  gate: {
+    failOn: '${gateVal ? 'new-regressions' : 'any-failures'}',
+  }
+});`;
+
+    codeBlock.textContent = code;
+  }
+
+  // Bind change listeners to config playground controls
+  [cfgAi, cfgQuarantine, cfgGate].forEach(el => {
+    if (el) el.addEventListener('change', updateConfigCode);
+  });
+  if (cfgThreshold) {
+    cfgThreshold.addEventListener('input', updateConfigCode);
+  }
+
+  // Initial render of config code
+  updateConfigCode();
+})();

@@ -43,8 +43,8 @@
         <svg class="nav__logo-mark" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
           <defs>
             <linearGradient id="logo-grad-nav" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#00d4ff"/>
-              <stop offset="100%" stop-color="#7c3aed"/>
+              <stop offset="0%" stop-color="var(--accent)"/>
+              <stop offset="100%" stop-color="var(--violet)"/>
             </linearGradient>
           </defs>
           <rect x="8" y="8" width="104" height="104" rx="26"
@@ -53,7 +53,7 @@
                 fill="none" stroke="url(#logo-grad-nav)" stroke-width="11"
                 stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M54 70 L66 84 L92 44"
-                fill="none" stroke="#00d4ff" stroke-width="11"
+                fill="none" stroke="var(--accent)" stroke-width="11"
                 stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         Maya Erusalimsky
@@ -143,8 +143,8 @@
           <svg class="hero__logo-mark" viewBox="0 0 120 120" focusable="false">
             <defs>
               <linearGradient id="logo-grad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#00d4ff"/>
-                <stop offset="100%" stop-color="#7c3aed"/>
+                <stop offset="0%" stop-color="var(--accent)"/>
+                <stop offset="100%" stop-color="var(--violet)"/>
               </linearGradient>
             </defs>
             <rect x="8" y="8" width="104" height="104" rx="26"
@@ -153,7 +153,7 @@
                   fill="none" stroke="url(#logo-grad)" stroke-width="10"
                   stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M54 70 L66 84 L92 44"
-                  fill="none" stroke="#00d4ff" stroke-width="10"
+                  fill="none" stroke="var(--accent)" stroke-width="10"
                   stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
@@ -484,6 +484,11 @@
                 ↻ Replay
               </button>
             </div>
+            <div class="terminal__controls" aria-label="Select command to simulate">
+              <button class="term-btn term-btn--active" data-cmd="analyze" type="button">analyze</button>
+              <button class="term-btn" data-cmd="quarantine" type="button">quarantine</button>
+              <button class="term-btn" data-cmd="gate" type="button">gate</button>
+            </div>
             <pre class="terminal__body" id="terminal-output" aria-hidden="true"><code></code></pre>
           </div>
         </div>
@@ -759,31 +764,292 @@
           </ul>
         </div>
 
-        <!-- ── Dashboard screenshot ──────────────────────────────── -->
+        <!-- ── Dashboard screenshot/sandbox ──────────────────────────────── -->
         <div class="flagship__demo reveal">
           <h3 class="flagship__block-title">The triage dashboard</h3>
-          <a href="https://mayageva11.github.io/flakehound/"
-             target="_blank" rel="noopener noreferrer"
-             class="flagship__demo-link"
-             aria-label="Open the live FlakeHound dashboard">
-            <span class="browser-frame">
-              <span class="browser-frame__bar" aria-hidden="true">
-                <span class="terminal__dot terminal__dot--red"></span>
-                <span class="terminal__dot terminal__dot--yellow"></span>
-                <span class="terminal__dot terminal__dot--green"></span>
-                <span class="browser-frame__url">mayageva11.github.io/flakehound</span>
-              </span>
-              <img
-                src="assets/flakehound-dashboard.png"
-                alt="FlakeHound dashboard: failure clusters ranked by impact with NEW chips on unseen bug shapes, test signals grouped by verdict, and the quarantine panel showing progress toward auto-release"
-                class="flagship__demo-img"
-                width="2880" height="2240"
-                loading="lazy" decoding="async">
-            </span>
-            <span class="flagship__demo-caption">
-              One self-contained HTML file - click to open the live dashboard ↗
-            </span>
-          </a>
+
+          <div class="sandbox-switcher" role="tablist" aria-label="Choose dashboard visualization">
+            <button class="sandbox-switch-btn sandbox-switch-btn--active" data-mode="screenshot" role="tab" aria-selected="true" aria-controls="panel-screenshot" type="button">
+              📷 Screenshot
+            </button>
+            <button class="sandbox-switch-btn" data-mode="sandbox" role="tab" aria-selected="false" aria-controls="panel-sandbox" type="button">
+              🕹️ Interactive Sandbox
+            </button>
+          </div>
+
+          <div class="browser-frame">
+            <div class="browser-frame__bar" aria-hidden="true">
+              <span class="terminal__dot terminal__dot--red"></span>
+              <span class="terminal__dot terminal__dot--yellow"></span>
+              <span class="terminal__dot terminal__dot--green"></span>
+              <span class="browser-frame__url" id="browser-url">mayageva11.github.io/flakehound</span>
+            </div>
+
+            <!-- Screenshot panel -->
+            <div class="sandbox-panel" id="panel-screenshot" role="tabpanel">
+              <a href="https://mayageva11.github.io/flakehound/"
+                 target="_blank" rel="noopener noreferrer"
+                 class="flagship__demo-link"
+                 aria-label="Open the live FlakeHound dashboard">
+                <img
+                  src="assets/flakehound-dashboard.png"
+                  alt="FlakeHound dashboard: failure clusters ranked by impact with NEW chips on unseen bug shapes, test signals grouped by verdict, and the quarantine panel showing progress toward auto-release"
+                  class="flagship__demo-img"
+                  width="2880" height="2240"
+                  loading="lazy" decoding="async">
+              </a>
+            </div>
+
+            <!-- Interactive Sandbox panel -->
+            <div class="sandbox-panel" id="panel-sandbox" role="tabpanel" hidden>
+              <div class="sandbox-app">
+                <!-- Sandbox Sidebar -->
+                <aside class="sandbox-sidebar">
+                  <div class="sandbox-sidebar__header">
+                    <span class="sandbox-sidebar__icon">🐕</span>
+                    <strong>FlakeHound</strong>
+                    <span class="sandbox-sidebar__version">v0.5.0</span>
+                  </div>
+                  <nav class="sandbox-sidebar__nav" aria-label="Sandbox views">
+                    <button class="sandbox-nav-btn sandbox-nav-btn--active" data-view="clusters" type="button">
+                      <span class="nav-icon">🐞</span> Bug Clusters
+                    </button>
+                    <button class="sandbox-nav-btn" data-view="quarantine" type="button">
+                      <span class="nav-icon">🚧</span> Quarantine Board
+                    </button>
+                    <button class="sandbox-nav-btn" data-view="config" type="button">
+                      <span class="nav-icon">⚙️</span> Config Playground
+                    </button>
+                  </nav>
+                </aside>
+
+                <!-- Sandbox Content Area -->
+                <main class="sandbox-main">
+                  
+                  <!-- View 1: Bug Clusters -->
+                  <div class="sandbox-view" id="view-clusters">
+                    <div class="sandbox-view__header">
+                      <h3>🐞 Bug Clusters</h3>
+                      <p>Jaccard similarity clustered failures. Resolve 4 bugs instead of chasing 23 failures.</p>
+                    </div>
+
+                    <div class="sandbox-accordion" role="list">
+                      
+                      <!-- Accordion Item 1 -->
+                      <div class="s-acc-item" role="listitem">
+                        <button class="s-acc-trigger" aria-expanded="false" aria-controls="cluster-desc-1" type="button">
+                          <span class="s-acc-left">
+                            <span class="badge badge--red">HIGH</span>
+                            <code>[7a7c1180]</code>
+                            <strong>cart total ≠ charged amount</strong>
+                          </span>
+                          <span class="s-acc-right">9 failures <span class="chevron">⌄</span></span>
+                        </button>
+                        <div class="s-acc-content" id="cluster-desc-1" hidden>
+                          <pre class="s-code"><code>AssertionError: cart total !== charged amount (expected 124.99, got 149.99)
+    at verifyPrice (checkout-flow.spec.ts:145)
+    at verifyPurchaseState (shop.spec.ts:241)</code></pre>
+                          <div class="s-ai-box">
+                            <div class="s-ai-header">
+                              <span class="s-ai-bulb">💡</span><strong>AI Root-Cause Hypothesis</strong>
+                              <button class="btn btn--outline btn--sm s-ai-gen-btn" data-cluster="price" type="button">Generate Hypothesis</button>
+                            </div>
+                            <div class="s-ai-result" hidden>
+                              <div class="s-ai-spinner" hidden>
+                                <span class="spinner-dot"></span> Analyzing trace details...
+                              </div>
+                              <p class="s-ai-text"></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Accordion Item 2 -->
+                      <div class="s-acc-item" role="listitem">
+                        <button class="s-acc-trigger" aria-expanded="false" aria-controls="cluster-desc-2" type="button">
+                          <span class="s-acc-left">
+                            <span class="badge badge--yellow">MEDIUM</span>
+                            <code>[a8a64e2d]</code>
+                            <strong>waiting for locator('#pay-button')</strong>
+                          </span>
+                          <span class="s-acc-right">7 failures <span class="chevron">⌄</span></span>
+                        </button>
+                        <div class="s-acc-content" id="cluster-desc-2" hidden>
+                          <pre class="s-code"><code>TimeoutError: waiting for locator('#pay-button') to be visible
+    at clickPayButton (payment-page.ts:92)
+    at testPaymentCycle (shop.spec.ts:182)</code></pre>
+                          <div class="s-ai-box">
+                            <div class="s-ai-header">
+                              <span class="s-ai-bulb">💡</span><strong>AI Root-Cause Hypothesis</strong>
+                              <button class="btn btn--outline btn--sm s-ai-gen-btn" data-cluster="payment" type="button">Generate Hypothesis</button>
+                            </div>
+                            <div class="s-ai-result" hidden>
+                              <div class="s-ai-spinner" hidden>
+                                <span class="spinner-dot"></span> Analyzing trace details...
+                              </div>
+                              <p class="s-ai-text"></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Accordion Item 3 -->
+                      <div class="s-acc-item" role="listitem">
+                        <button class="s-acc-trigger" aria-expanded="false" aria-controls="cluster-desc-3" type="button">
+                          <span class="s-acc-left">
+                            <span class="badge badge--dim">LOW</span>
+                            <code>[c1f30b9a]</code>
+                            <strong>502 Bad Gateway from /api/checkout</strong>
+                          </span>
+                          <span class="s-acc-right">4 failures <span class="chevron">⌄</span></span>
+                        </button>
+                        <div class="s-acc-content" id="cluster-desc-3" hidden>
+                          <pre class="s-code"><code>NetworkError: 502 Bad Gateway from POST /api/checkout
+    at sendCheckoutPayload (checkout-service.ts:42)
+    at verifyCheckoutRequest (shop.spec.ts:114)</code></pre>
+                          <div class="s-ai-box">
+                            <div class="s-ai-header">
+                              <span class="s-ai-bulb">💡</span><strong>AI Root-Cause Hypothesis</strong>
+                              <button class="btn btn--outline btn--sm s-ai-gen-btn" data-cluster="network" type="button">Generate Hypothesis</button>
+                            </div>
+                            <div class="s-ai-result" hidden>
+                              <div class="s-ai-spinner" hidden>
+                                <span class="spinner-dot"></span> Analyzing trace details...
+                              </div>
+                              <p class="s-ai-text"></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Accordion Item 4 -->
+                      <div class="s-acc-item" role="listitem">
+                        <button class="s-acc-trigger" aria-expanded="false" aria-controls="cluster-desc-4" type="button">
+                          <span class="s-acc-left">
+                            <span class="badge badge--dim">LOW</span>
+                            <code>[e07d5521]</code>
+                            <strong>receipt total missing</strong>
+                          </span>
+                          <span class="s-acc-right">3 failures <span class="chevron">⌄</span></span>
+                        </button>
+                        <div class="s-acc-content" id="cluster-desc-4" hidden>
+                          <pre class="s-code"><code>ElementNotFound: receipt total element was not found in page
+    at verifyReceiptTotal (receipt-page.ts:31)
+    at testReceiptLayout (shop.spec.ts:89)</code></pre>
+                          <div class="s-ai-box">
+                            <div class="s-ai-header">
+                              <span class="s-ai-bulb">💡</span><strong>AI Root-Cause Hypothesis</strong>
+                              <button class="btn btn--outline btn--sm s-ai-gen-btn" data-cluster="receipt" type="button">Generate Hypothesis</button>
+                            </div>
+                            <div class="s-ai-result" hidden>
+                              <div class="s-ai-spinner" hidden>
+                                <span class="spinner-dot"></span> Analyzing trace details...
+                              </div>
+                              <p class="s-ai-text"></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <!-- View 2: Quarantine Board -->
+                  <div class="sandbox-view" id="view-quarantine" hidden>
+                    <div class="sandbox-view__header">
+                      <h3>🚧 Quarantine Board</h3>
+                      <p>Auto-isolate flaky tests via surgical AST edits. Non-flaky code regressions cannot be quarantined.</p>
+                    </div>
+
+                    <div class="sandbox-q-list">
+                      
+                      <!-- Quarantine Item 1 -->
+                      <div class="sandbox-q-item">
+                        <div class="sandbox-q-meta">
+                          <span class="badge badge--yellow">FLAKY</span>
+                          <strong>shop.spec.ts &gt; checkout</strong>
+                          <p class="sandbox-q-desc">Passed and failed on identical commit hashes. Candidate for AST quarantine.</p>
+                        </div>
+                        <div class="sandbox-q-action">
+                          <button class="btn btn--primary s-q-btn" id="btn-quarantine-checkout" type="button">Quarantine Test</button>
+                        </div>
+                      </div>
+
+                      <!-- Quarantine Item 2 -->
+                      <div class="sandbox-q-item">
+                        <div class="sandbox-q-meta">
+                          <span class="badge badge--red">REGRESSION</span>
+                          <strong>shop.spec.ts &gt; payment</strong>
+                          <p class="sandbox-q-desc">Failed 100% since commit bbb2222. Hard code regression, not flaky.</p>
+                        </div>
+                        <div class="sandbox-q-action" style="position: relative;">
+                          <button class="btn btn--outline s-q-btn" disabled type="button">Quarantine</button>
+                          <span class="s-tooltip">Cannot quarantine regressions!</span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <!-- View 3: Config Playground -->
+                  <div class="sandbox-view" id="view-config" hidden>
+                    <div class="sandbox-view__header">
+                      <h3>⚙️ Config Playground</h3>
+                      <p>Customize FlakeHound's analysis logic. See the generated configuration update in real-time.</p>
+                    </div>
+
+                    <div class="sandbox-config-split">
+                      <div class="sandbox-config-form">
+                        
+                        <div class="form-group">
+                          <label class="switch-label">
+                            <input type="checkbox" id="cfg-ai" checked>
+                            <span class="switch-slider"></span>
+                            Enable AI Hypothesis Layer
+                          </label>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="switch-label">
+                            <input type="checkbox" id="cfg-quarantine" checked>
+                            <span class="switch-slider"></span>
+                            Auto-Quarantine Flaky Tests
+                          </label>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="switch-label">
+                            <input type="checkbox" id="cfg-gate" checked>
+                            <span class="switch-slider"></span>
+                            Gate CI on New Regressions Only
+                          </label>
+                        </div>
+
+                        <div class="form-group slider-group">
+                          <div class="slider-header">
+                            <span>Jaccard Similarity Threshold</span>
+                            <strong id="cfg-threshold-val">0.80</strong>
+                          </div>
+                          <input type="range" id="cfg-threshold" min="0.5" max="0.95" step="0.05" value="0.80">
+                        </div>
+
+                      </div>
+                      
+                      <div class="sandbox-config-code">
+                        <div class="code-title">flakehound.config.ts</div>
+                        <pre class="s-code"><code id="config-code-block"></code></pre>
+                      </div>
+                    </div>
+                  </div>
+
+                </main>
+              </div>
+            </div>
+          </div>
+
+          <span class="flagship__demo-caption" id="demo-caption">
+            One self-contained HTML file - click to open the live dashboard ↗
+          </span>
         </div>
 
         <!-- ── Living demo - the Flaky Shop ──────────────────────── -->
@@ -827,9 +1093,17 @@
         <p class="section__eyebrow">04 - More of my work</p>
         <h2 class="section__title" id="projects-heading">Other Projects</h2>
 
+        <div class="projects__filters" role="group" aria-label="Filter projects by technology">
+          <button class="projects__filter-btn projects__filter-btn--active" data-filter="all">All Projects</button>
+          <button class="projects__filter-btn" data-filter="playwright">Playwright</button>
+          <button class="projects__filter-btn" data-filter="typescript">TypeScript</button>
+          <button class="projects__filter-btn" data-filter="ai">AI / LLM</button>
+          <button class="projects__filter-btn" data-filter="react">React / Next.js</button>
+        </div>
+
         <div class="projects__grid">
 
-          <article class="project-card reveal" data-href="https://mayageva11.github.io/nexusqa/">
+          <article class="project-card reveal" data-tags="playwright typescript ai" data-href="https://mayageva11.github.io/nexusqa/">
             <a href="https://mayageva11.github.io/nexusqa/"
                class="project-card__media"
                target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
@@ -888,7 +1162,7 @@
             </div>
           </article>
 
-          <article class="project-card reveal" data-href="https://mayageva11.github.io/questforge/">
+          <article class="project-card reveal" data-tags="ai" data-href="https://mayageva11.github.io/questforge/">
             <a href="https://mayageva11.github.io/questforge/"
                class="project-card__media"
                target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
@@ -950,7 +1224,7 @@
             </div>
           </article>
 
-          <article class="project-card reveal" data-href="https://github.com/mayageva11/EduCare">
+          <article class="project-card reveal" data-tags="react typescript" data-href="https://github.com/mayageva11/EduCare">
             <div class="project-card__media project-card__media--gradient project-card__media--educare" aria-hidden="true">
               <span class="project-card__media-glyph">🎓</span>
             </div>
@@ -1004,7 +1278,7 @@
             </div>
           </article>
 
-          <article class="project-card reveal" data-href="https://github.com/mayageva11/job-dashboard">
+          <article class="project-card reveal" data-tags="react" data-href="https://github.com/mayageva11/job-dashboard">
             <div class="project-card__media project-card__media--gradient project-card__media--jobs" aria-hidden="true">
               <span class="project-card__media-glyph">📬</span>
             </div>
@@ -1082,8 +1356,8 @@
             <svg class="ai-loop__ring" viewBox="0 0 320 320" aria-hidden="true">
               <defs>
                 <linearGradient id="aiLoopGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#00d4ff"/>
-                  <stop offset="1" stop-color="#7c3aed"/>
+                  <stop offset="0" stop-color="var(--accent)"/>
+                  <stop offset="1" stop-color="var(--violet)"/>
                 </linearGradient>
               </defs>
               <circle class="ai-loop__track" cx="160" cy="160" r="128"/>
@@ -1362,7 +1636,7 @@
                 fill="none" stroke="url(#logo-grad)" stroke-width="11"
                 stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M54 70 L66 84 L92 44"
-                fill="none" stroke="#00d4ff" stroke-width="11"
+                fill="none" stroke="var(--accent)" stroke-width="11"
                 stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         Maya Erusalimsky - QA Automation Engineer &middot; Built with HTML, CSS &amp; JS &middot; 2026
