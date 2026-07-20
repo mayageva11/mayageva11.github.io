@@ -43,15 +43,15 @@ Proof that I can automate *anything*: a realistic SaaS analytics application **a
 | Project | What it is |
 |---|---|
 | [QuestForge](https://github.com/mayageva11/questforge) | System design interview prep as story-driven quests with AI-generated scenes - [live](https://mayageva11.github.io/questforge/) |
-| [EduCare](https://github.com/mayageva11/EduCare) | Full-stack school counselor platform - Next.js 15, MongoDB, Hebrew RTL, Ministry of Education forms |
+| [EduCare](https://educare-sigma-one.vercel.app/) | Full-stack school counselor platform - Next.js 15, MongoDB, Hebrew RTL, Ministry of Education forms ([live](https://educare-sigma-one.vercel.app/)) |
 | [Job Dashboard](https://github.com/mayageva11/job-dashboard) | Automated job aggregation with weighted skills-match scoring and daily email digests |
 
 ## About this site
 
 Built deliberately with **zero frameworks and zero build step** - pure HTML, CSS, and JavaScript, deployed straight to GitHub Pages.
 
-- Dark developer-tooling aesthetic (Linear/Vercel-inspired), fully responsive
-- Animated CLI terminal that replays a real `flakehound analyze` run
+- **Elite editorial aesthetic** - a warm, all-dark Bordeaux Noir palette with Vanilla Silk / Alpine Oat cream typography and Fraunces serif display headings; fully responsive
+- Animated CLI terminal that replays a real `flakehound analyze` run, plus an interactive sandbox dashboard (Bug Clusters, Quarantine Board, Config Playground)
 - Semantic HTML, keyboard-operable navigation, visible focus states, `prefers-reduced-motion` support throughout
 - Cursor-tracking card glow, scroll-spy navigation, staged entrance choreography - all in vanilla JS
 

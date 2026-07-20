@@ -15,8 +15,8 @@
       min-height: 100dvh;
       display: grid;
       place-items: center;
-      background: #080b14;
-      color: #e2e8f0;
+      background: #260B0E;
+      color: #F5EFE6;
       font-family: 'Inter', system-ui, sans-serif;
       text-align: center;
       padding: 2rem;
@@ -28,7 +28,7 @@
       font-size: clamp(4rem, 15vw, 6rem);
       font-weight: 800;
       letter-spacing: -0.04em;
-      background: linear-gradient(130deg, #00d4ff, #a78bfa);
+      background: linear-gradient(130deg, #E1D7C6, #50171C);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -44,8 +44,8 @@
     .test {
       font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
       font-size: 0.85rem;
-      color: #94a3b8;
-      background: #0a0e18;
+      color: #C8B9AA;
+      background: #1A0509;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-left: 3px solid #ff6b6b;
       border-radius: 10px;
@@ -55,12 +55,12 @@
       line-height: 1.7;
     }
     .test .fail { color: #ff6b6b; }
-    .test .dim  { color: #7c8797; }
+    .test .dim  { color: #C8B9AA; }
     a.btn {
       display: inline-block;
       padding: 0.75rem 1.5rem;
-      background: #00d4ff;
-      color: #080b14;
+      background: #E1D7C6;
+      color: #260B0E;
       font-weight: 600;
       font-size: 0.95rem;
       border-radius: 8px;
@@ -68,10 +68,10 @@
       transition: box-shadow 0.2s ease, transform 0.2s ease;
     }
     a.btn:hover {
-      box-shadow: 0 0 22px rgba(0, 212, 255, 0.45);
+      box-shadow: 0 0 22px rgba(225, 215, 198, 0.45);
       transform: translateY(-1px);
     }
-    a.btn:focus-visible { outline: 2px solid #00d4ff; outline-offset: 3px; }
+    a.btn:focus-visible { outline: 2px solid #E1D7C6; outline-offset: 3px; }
   </style>
 </head>
 <body>
@@ -79,13 +79,13 @@
     <svg class="logo" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
       <defs>
         <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#00d4ff"/>
-          <stop offset="100%" stop-color="#7c3aed"/>
+          <stop offset="0%" stop-color="#E1D7C6"/>
+          <stop offset="100%" stop-color="#50171C"/>
         </linearGradient>
       </defs>
-      <rect x="8" y="8" width="104" height="104" rx="26" fill="#0f1420" stroke="url(#g)" stroke-width="5"/>
+      <rect x="8" y="8" width="104" height="104" rx="26" fill="#260B0E" stroke="url(#g)" stroke-width="5"/>
       <path d="M32 82 V46 L54 70" fill="none" stroke="url(#g)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M54 70 L66 84 L92 44" fill="none" stroke="#00d4ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M54 70 L66 84 L92 44" fill="none" stroke="#E1D7C6" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 
     <p class="code">404</p>

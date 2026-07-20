@@ -530,7 +530,7 @@ archToggles.forEach(btn => {
 
 /* ─── Cursor-tracking glow + subtle 3D tilt on cards ─────────── */
 if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
-  const glowCards = document.querySelectorAll('.project-card, .feature-card, .timeline__card');
+  const glowCards = document.querySelectorAll('.project-card, .feature-card, .timeline__card, .ds-engine-card');
   glowCards.forEach(card => {
     card.classList.add('glow-card');
     const tilts = card.classList.contains('project-card');
